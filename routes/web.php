@@ -11,10 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'PagesController@home');
+Route::resource('/cameras', 'CamerasController');
+Route::resource('/models', 'ThreeDsController');
+Route::resource('/scenes', 'ScenesController');
+Route::resource('/protocols', 'ProtocolsController');

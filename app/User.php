@@ -5,6 +5,9 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Camera;
+use App\ThreeD;
+use App\Scene;
 
 class User extends Authenticatable
 {
@@ -36,4 +39,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function cameras()
+    {
+        return $this->hasMany(Camera::class);
+    }
+
+    public function three_ds()
+    {
+        return $this->hasMany(ThreeD::class);
+    }
+
+    public function scenes()
+    {
+        return $this->hasMany(Scene::class);
+    }
 }

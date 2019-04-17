@@ -1,10 +1,19 @@
 <?php
 
 namespace App\Http\Controllers;
+use Auth;
 
 class PagesController extends Controller
 {
     public function __construct() {
+    }
+
+    public function home() {
+        if (Auth::check()) {
+            return redirect('/cameras');
+        }
+
+        return view('home');
     }
 
     public function contact() {
