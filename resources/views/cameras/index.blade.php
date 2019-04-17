@@ -12,7 +12,7 @@
 		<div class="col-lg-6">
 			<div class="box box-info">
 				<div class="box-body">
-					@if($cameras)
+					@if(count($cameras))
 						<div class="table table-responsive">
 							<table class="table no-margin">
 								@foreach ($cameras as $camera)

@@ -11,7 +11,7 @@
 		<div class="col-lg-6">
 			<div class="box box-info">
 				<div class="box-body">
-					@if($three_ds)
+					@if(count($three_ds))
 						<div class="table table-responsive">
 							<table class="table no-margin">
 								@foreach ($three_ds as $three_d)
