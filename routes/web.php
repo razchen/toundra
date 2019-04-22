@@ -14,7 +14,14 @@
 Auth::routes();
 
 Route::get('/', 'PagesController@home');
+
+/* User Routes */
 Route::resource('/cameras', 'CamerasController');
 Route::resource('/models', 'ThreeDsController');
 Route::resource('/scenes', 'ScenesController');
+
+/* Admin Routes */
+Route::resource('/admin/cameras', 'AdminCamerasController');
+Route::resource('/admin/models', 'AdminThreeDsController');
+Route::resource('/admin/scenes', 'AdminScenesController');
 Route::resource('/protocols', 'ProtocolsController');

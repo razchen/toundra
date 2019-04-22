@@ -13,6 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/register', 'Auth\RegisterController@register');
+Route::group(['middleware' => ['check_api_key']], function () {
+	Route::resource('/cameras', 'APICamerasController');
+	Route::resource('/models', 'APIThreeDsController');
+	Route::resource('/scenes', 'APIScenesController');
 });

@@ -110,16 +110,23 @@
                   <li class="active"><a href="/login"><i class="fa fa-sign-in"></i> <span>Login</span></a></li>
                   <li class="active"><a href="/register"><i class="fa fa-plus"></i> <span>Register</span></a></li>
                 @else
-                  <li class="active"><a href="/cameras"><i class="fa fa-camera"></i> <span>Cameras</span></a></li>
-                  <li class="active"><a href="/models"><i class="fa fa-cube"></i> <span>Models</span></a></li>
-                  <li class="active"><a href="/scenes"><i class="fa fa-binoculars"></i> <span>Scenes</span></a></li>
                   @if (Auth::user()->type == 'admin')
+                    <li class="active"><a href="/admin/cameras"><i class="fa fa-camera"></i> <span>Cameras</span></a></li>
+                    <li class="active"><a href="/admin/models"><i class="fa fa-cube"></i> <span>Models</span></a></li>
+                    <li class="active"><a href="/admin/scenes"><i class="fa fa-binoculars"></i> <span>Scenes</span></a></li>
                     <li class="active"><a href="/protocols"><i class="fa fa-server"></i> <span>Protocols</span></a></li>
+                  @else
+                    <li class="active"><a href="/cameras"><i class="fa fa-camera"></i> <span>Cameras</span></a></li>
+                    <li class="active"><a href="/models"><i class="fa fa-cube"></i> <span>Models</span></a></li>
+                    <li class="active"><a href="/scenes"><i class="fa fa-binoculars"></i> <span>Scenes</span></a></li>
                   @endif
                 @endguest
-                <li class="active">
-                  <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i> <span>Logout</span></a>
-                </li>
+
+                @auth
+                  <li class="active">
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i> <span>Logout</span></a>
+                  </li>
+                @endauth
 
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf

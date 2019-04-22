@@ -5,31 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\ThreeD;
 
-class ThreeDsController extends Controller
+class APIThreeDsController extends Controller
 {
-    public function __construct()
-	{
-		$this->middleware('auth');
-	}
-
     public function index()
     {
- 		return view('user-pages.three_ds.index',[
- 			'three_ds' => auth()->user()->three_ds
- 		]);
+        return response()->JSON(auth()->user()->three_ds);
     }
 
     public function create()
     {
- 		return view('user-pages.three_ds.create');
+ 		return null;
     }
 
     public function edit(ThreeD $three_d, $model)
     {
-    	$three_d = ThreeD::findOrFail($model);
-        $this->authorize('view',$three_d);
-        
- 		return view('user-pages.three_ds.edit')->with(compact('three_d'));
+    	return null;
     }
 
     public function show(ThreeD $three_d, $model)
@@ -37,7 +27,7 @@ class ThreeDsController extends Controller
     	$three_d = ThreeD::findOrFail($model);
     	$this->authorize('view',$three_d);
 
- 		return view('user-pages.three_ds.show')->with(compact('three_d'));
+ 		return response()->JSON($three_d);
     }
 
     public function update(ThreeD $three_d, $model)
@@ -49,7 +39,7 @@ class ThreeDsController extends Controller
 
     	$three_d->update($attributes);
 
-    	return redirect('/models');
+    	return response()->JSON($three_d);
     }
 
     public function store()
@@ -57,9 +47,9 @@ class ThreeDsController extends Controller
     	$attributes = $this->validateThreeD();
     	$attributes['user_id'] = auth()->id();
 
- 		ThreeD::create($attributes);
+ 		$three_d = ThreeD::create($attributes);
 
- 		return redirect('/models');
+ 		return response()->JSON($three_d);
     }
 
     protected function validateThreeD()

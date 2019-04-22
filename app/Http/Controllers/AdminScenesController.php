@@ -4,52 +4,52 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Scene;
+use App\Camera;
+use App\User;
 
-class ScenesController extends Controller
+class AdminScenesController extends Controller
 {
     public function __construct()
 	{
 		$this->middleware('auth');
+        $this->middleware('admin');
 	}
 
     public function index()
     {
- 		return view('user-pages.scenes.index',[
- 			'scenes' => auth()->user()->scenes
+ 		return view('admin-pages.scenes.index',[
+ 			'scenes' => Scene::all()
  		]);
     }
 
     public function create()
     {
- 		return view('user-pages.scenes.create',[
-            'cameras' => auth()->user()->cameras
+ 		return view('admin-pages.scenes.create',[
+            'cameras' => Camera::all(),
+            'users' => User::all()
         ]);
     }
 
     public function edit(Scene $scene)
     {
-        $this->authorize('view',$scene);
-        $cameras = auth()->user()->cameras;
+        $cameras = Camera::all();
+        $users = User::all();
 
- 		return view('user-pages.scenes.edit')->with(compact('scene','cameras'));
+ 		return view('admin-pages.scenes.edit')->with(compact('scene','cameras','users'));
     }
 
     public function show(Scene $scene)
     {
-    	$this->authorize('view',$scene);
-
- 		return view('user-pages.scenes.show')->with(compact('scene'));
+ 		return view('admin-pages.scenes.show')->with(compact('scene'));
     }
 
     public function update(Scene $scene)
     {
-    	$this->authorize('update',$scene);
-
     	$attributes = $this->validateScene();
 
     	$scene->update($attributes);
 
-    	return redirect('/scenes');
+    	return redirect('/admin/scenes');
     }
 
     public function store(Scene $scene)
@@ -57,16 +57,16 @@ class ScenesController extends Controller
         $this->authorize('store', $scene);
 
     	$attributes = $this->validateScene();
-    	$attributes['user_id'] = auth()->id();
 
  		Scene::create($attributes);
 
- 		return redirect('/scenes');
+ 		return redirect('/admin/nscenes');
     }
 
     protected function validateScene()
     {
     	return request()->validate([
+            'user_id' => 'required|exists:users,id',
     		'name' => 'required',
     		'transforms' => 'required|json',
             'active' => 'required|in:0,1',

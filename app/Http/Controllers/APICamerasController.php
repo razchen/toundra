@@ -5,48 +5,38 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Camera;
 
-class CamerasController extends Controller
+class APICamerasController extends Controller
 {
-    public function __construct()
-	{
-		$this->middleware('auth');
-	}
 
     public function index()
     {
- 		return view('user-pages.cameras.index',[
- 			'cameras' => auth()->user()->cameras
- 		]);
+        return response()->JSON(auth()->user()->cameras);	
     }
 
     public function create()
     {
- 		return view('user-pages.cameras.create');
+ 		return null;
     }
 
-    public function edit(Camera $camera)
+    public function edit()
     {
-        $this->authorize('view',$camera);
-        
- 		return view('user-pages.cameras.edit')->with(compact('camera'));
+ 		return null;
     }
 
     public function show(Camera $camera)
     {
     	$this->authorize('view',$camera);
 
- 		return view('user-pages.cameras.show')->with(compact('camera'));
+ 		return response()->JSON($camera);
     }
 
     public function update(Camera $camera)
     {
     	$this->authorize('update',$camera);
-
     	$attributes = $this->validateCamera();
-
     	$camera->update($attributes);
 
-    	return redirect('/cameras');
+    	return response()->JSON($camera);
     }
 
     public function store()
@@ -54,9 +44,9 @@ class CamerasController extends Controller
     	$attributes = $this->validateCamera();
     	$attributes['user_id'] = auth()->id();
 
- 		Camera::create($attributes);
+ 		$camera = Camera::create($attributes);
 
- 		return redirect('/cameras');
+ 		return response()->JSON($camera);
     }
 
     protected function validateCamera()

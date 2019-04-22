@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('header','Create Model')
+@section('header','Edit '.$three_d->name)
 @section('breadcrumbs')
 	<li><a href="/"><i class="fa fa-home"></i> Home</a></li>
     <li class="active">Models</li>
@@ -12,8 +12,9 @@
 	<div class="col-lg-8">
 		@include('errors')
 
-		<form method="POST" action="/models" class="needs-validation" novalidate>
+		<form method="POST" action="/models/{{ $three_d->id }}" class="needs-validation" novalidate>
 			{{ csrf_field() }}
+			{{ method_field('PATCH') }}
 
 			<div class="box box-info">
 				<div class="box-body">
@@ -21,18 +22,18 @@
 						<label>Model Name</label>
 						<input 
 							class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" 
-							value="{{ old('name') }}"
 							type="text" 
 							name="name" 
-							placeholder="Model name">
+							placeholder="Model Name" 
+							value="{{ $three_d->name }}">
 					</div>
 
 					<div class="form-group">
-						<label>Point Of View</label>
+						<label>Description</label>
 						<textarea 
-							class="form-control {{ $errors->has('point_of_view') ? 'is-invalid' : '' }}" 
-							name="point_of_view" 
-							placeholder="Point Of View">{{ old('point_of_view') }}</textarea>
+							class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" 
+							name="description" 
+							placeholder="Description">{{ $three_d->description }}</textarea>
 					</div>
 				</div>
 

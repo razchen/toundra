@@ -4,64 +4,63 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Camera;
+use App\User;
 
-class CamerasController extends Controller
+class AdminCamerasController extends Controller
 {
     public function __construct()
 	{
 		$this->middleware('auth');
+        $this->middleware('admin');
 	}
 
     public function index()
     {
- 		return view('user-pages.cameras.index',[
- 			'cameras' => auth()->user()->cameras
+ 		return view('admin-pages.cameras.index',[
+ 			'cameras' => Camera::all()
  		]);
     }
 
     public function create()
     {
- 		return view('user-pages.cameras.create');
+ 		return view('admin-pages.cameras.create',[
+            'users' => User::all()
+        ]);
     }
 
     public function edit(Camera $camera)
     {
-        $this->authorize('view',$camera);
-        
- 		return view('user-pages.cameras.edit')->with(compact('camera'));
+        $users = User::all();
+ 		return view('admin-pages.cameras.edit')->with(compact('camera','users'));
     }
 
     public function show(Camera $camera)
     {
-    	$this->authorize('view',$camera);
-
- 		return view('user-pages.cameras.show')->with(compact('camera'));
+ 		return view('admin-pages.cameras.show')->with(compact('camera'));
     }
 
     public function update(Camera $camera)
     {
-    	$this->authorize('update',$camera);
-
     	$attributes = $this->validateCamera();
 
     	$camera->update($attributes);
 
-    	return redirect('/cameras');
+    	return redirect('/admin/cameras');
     }
 
     public function store()
     {
     	$attributes = $this->validateCamera();
-    	$attributes['user_id'] = auth()->id();
 
  		Camera::create($attributes);
 
- 		return redirect('/cameras');
+ 		return redirect('/admin/cameras');
     }
 
     protected function validateCamera()
     {
     	return request()->validate([
+            'user_id' => 'required|exists:users,id',
     		'name' => 'required',
     		'intrinsic' => 'required',
     	]);

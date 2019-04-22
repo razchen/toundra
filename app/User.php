@@ -19,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'api_key'
     ];
 
     /**
@@ -42,16 +42,16 @@ class User extends Authenticatable
 
     public function cameras()
     {
-        return $this->hasMany(Camera::class);
+        return $this->hasMany(Camera::class)->orderBy('created_at','desc');
     }
 
     public function three_ds()
     {
-        return $this->hasMany(ThreeD::class);
+        return $this->hasMany(ThreeD::class)->orderBy('created_at','desc');
     }
 
     public function scenes()
     {
-        return $this->hasMany(Scene::class);
+        return $this->hasMany(Scene::class)->orderBy('created_at','desc');
     }
 }

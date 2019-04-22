@@ -1,0 +1,56 @@
+@extends('layouts.admin')
+
+@section('header','Edit '.$three_d->name)
+@section('breadcrumbs')
+	<li><a href="/"><i class="fa fa-home"></i> Home</a></li>
+    <li class="active">Models</li>
+@stop
+
+@section('content')
+
+<div class="row">
+	<div class="col-lg-8">
+		@include('errors')
+
+		<form method="POST" action="/admin/models/{{ $three_d->id }}" class="needs-validation" novalidate>
+			{{ csrf_field() }}
+			{{ method_field('PATCH') }}
+
+			<div class="box box-info">
+				<div class="box-body">
+					<div class="form-group">
+						<label>User</label>
+						<select class="form-control" name="user_id">
+							@foreach($users as $user)
+								<option value="{{ $user->id }}" {{ $three_d->user_id == $user->id ? 'selected' : null }}>{{ $user->id }} - {{ $user->name }}</option>
+							@endforeach
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label>Model Name</label>
+						<input 
+							class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" 
+							type="text" 
+							name="name" 
+							placeholder="Model Name" 
+							value="{{ $three_d->name }}">
+					</div>
+
+					<div class="form-group">
+						<label>Description</label>
+						<textarea 
+							class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" 
+							name="description" 
+							placeholder="Description">{{ $three_d->description }}</textarea>
+					</div>
+				</div>
+
+				<div class="box-footer">
+					<input class="btn btn-primary" type="submit" value="Submit" />
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+@stop

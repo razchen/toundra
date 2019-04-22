@@ -11,12 +11,12 @@
 		<div class="col-lg-6">
 			<div class="box box-info">
 				<div class="box-body">
-					<label>Point Of View</label>
-					<p>{{ $three_d->point_of_view }}</p>
+					<label>Description</label>
+					<p>{{ $three_d->description }}</p>
 				</div>
 
 				<div class="box-footer">
-					<a href="/models/{{ $three_d->id }}/edit" class="btn btn-primary">Edit</a>
+					<a href="/admin/models/{{ $three_d->id }}/edit" class="btn btn-primary">Edit</a>
 				</div>
 			</div>
 		</div>

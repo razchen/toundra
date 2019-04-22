@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('header','Edit '.$three_d->name)
+@section('header','Create Model')
 @section('breadcrumbs')
 	<li><a href="/"><i class="fa fa-home"></i> Home</a></li>
     <li class="active">Models</li>
@@ -12,28 +12,36 @@
 	<div class="col-lg-8">
 		@include('errors')
 
-		<form method="POST" action="/models/{{ $three_d->id }}" class="needs-validation" novalidate>
+		<form method="POST" action="/admin/models" class="needs-validation" novalidate>
 			{{ csrf_field() }}
-			{{ method_field('PATCH') }}
 
 			<div class="box box-info">
 				<div class="box-body">
 					<div class="form-group">
+						<label>User</label>
+						<select class="form-control" name="user_id">
+							@foreach($users as $user)
+								<option value="{{ $user->id }}">{{ $user->id }} - {{ $user->name }}</option>
+							@endforeach
+						</select>
+					</div>
+					
+					<div class="form-group">
 						<label>Model Name</label>
 						<input 
 							class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" 
+							value="{{ old('name') }}"
 							type="text" 
 							name="name" 
-							placeholder="Model Name" 
-							value="{{ $three_d->name }}">
+							placeholder="Model name">
 					</div>
 
 					<div class="form-group">
-						<label>Point Of View</label>
+						<label>Description</label>
 						<textarea 
-							class="form-control {{ $errors->has('point_of_view') ? 'is-invalid' : '' }}" 
-							name="point_of_view" 
-							placeholder="Point Of View">{{ $three_d->point_of_view }}</textarea>
+							class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" 
+							name="description" 
+							placeholder="Description">{{ old('description') }}</textarea>
 					</div>
 				</div>
 

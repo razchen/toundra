@@ -5,40 +5,28 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Scene;
 
-class ScenesController extends Controller
+class APIScenesController extends Controller
 {
-    public function __construct()
-	{
-		$this->middleware('auth');
-	}
-
     public function index()
     {
- 		return view('user-pages.scenes.index',[
- 			'scenes' => auth()->user()->scenes
- 		]);
+        return response()->JSON(auth()->user()->scenes);
     }
 
     public function create()
     {
- 		return view('user-pages.scenes.create',[
-            'cameras' => auth()->user()->cameras
-        ]);
+ 		return null;
     }
 
     public function edit(Scene $scene)
     {
-        $this->authorize('view',$scene);
-        $cameras = auth()->user()->cameras;
-
- 		return view('user-pages.scenes.edit')->with(compact('scene','cameras'));
+        return null;
     }
 
     public function show(Scene $scene)
     {
     	$this->authorize('view',$scene);
 
- 		return view('user-pages.scenes.show')->with(compact('scene'));
+        return response()->JSON($scene);
     }
 
     public function update(Scene $scene)
@@ -49,7 +37,7 @@ class ScenesController extends Controller
 
     	$scene->update($attributes);
 
-    	return redirect('/scenes');
+    	return response()->JSON($scene);
     }
 
     public function store(Scene $scene)
@@ -59,9 +47,9 @@ class ScenesController extends Controller
     	$attributes = $this->validateScene();
     	$attributes['user_id'] = auth()->id();
 
- 		Scene::create($attributes);
+ 		$scene = Scene::create($attributes);
 
- 		return redirect('/scenes');
+ 		return response()->JSON($scene);
     }
 
     protected function validateScene()

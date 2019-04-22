@@ -39,7 +39,7 @@ class Kernel extends HttpKernel
 
         'api' => [
             'throttle:60,1',
-            'bindings',
+            'bindings'
         ],
     ];
 
@@ -62,6 +62,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin' => \App\Http\Middleware\RedirectIfNotAdmin::class,
         'check_type' => \App\Http\Middleware\CheckType::class,
+        'check_api_key' => \App\Http\Middleware\CheckAPIKey::class,
     ];
 
     /**
