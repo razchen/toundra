@@ -23,6 +23,11 @@ class ControlDefinition extends Model
         return $this->belongsTo(ThreeD::class);
     }
 
+    public function control_definitions()
+    {
+        return $this->hasMany(ControlOperation::class);
+    }
+
     public function ThreeDOwnedByUser($three_d_id)
     {
         $three_d = ThreeD::find($three_d_id);

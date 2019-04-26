@@ -20,6 +20,7 @@ Route::resource('/cameras', 'CamerasController');
 Route::resource('/models', 'ThreeDsController');
 Route::resource('/scenes', 'ScenesController');
 Route::resource('/control-definitions', 'ControlDefinitionsController');
+Route::resource('/reports', 'ReportsController');
 
 /* Admin Routes */
 Route::resource('/admin/cameras', 'AdminCamerasController');
