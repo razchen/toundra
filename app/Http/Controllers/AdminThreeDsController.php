@@ -17,21 +17,21 @@ class AdminThreeDsController extends Controller
     public function index()
     {
  		return view('admin-pages.three_ds.index',[
- 			'three_ds' => ThreeD::all()
+ 			'three_ds' => ThreeD::orderBy('updated_at','desc')->get()
  		]);
     }
 
     public function create()
     {
  		return view('admin-pages.three_ds.create',[
-            'users' => User::all()
+            'users' => User::orderBy('name','asc')->get()
         ]);
     }
 
     public function edit(ThreeD $three_d, $model)
     {
     	$three_d = ThreeD::findOrFail($model);
-        $users = User::all();
+        $users = User::rderBy('name','asc')->get();
  		return view('admin-pages.three_ds.edit')->with(compact('three_d','users'));
     }
 

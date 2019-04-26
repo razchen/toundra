@@ -11,6 +11,9 @@
 		<div class="col-lg-6">
 			<div class="box box-info">
 				<div class="box-body">
+					<label>User</label>
+					<p>{{ $scene->user->name }}</p>
+
 					<label>Range of likely transforms</label>
 					<p>{{ $scene->transforms }}</p>
 

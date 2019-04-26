@@ -18,22 +18,22 @@ class AdminScenesController extends Controller
     public function index()
     {
  		return view('admin-pages.scenes.index',[
- 			'scenes' => Scene::all()
+ 			'scenes' => Scene::orderBy('updated_at','desc')->get()
  		]);
     }
 
     public function create()
     {
  		return view('admin-pages.scenes.create',[
-            'cameras' => Camera::all(),
-            'users' => User::all()
+            'cameras' => Camera::orderBy('name','asc')->get(),
+            'users' => User::orderBy('name','asc')->get()
         ]);
     }
 
     public function edit(Scene $scene)
     {
-        $cameras = Camera::all();
-        $users = User::all();
+        $cameras = Camera::orderBy('name','asc')->get();
+        $users = User::orderBy('name','asc')->get();
 
  		return view('admin-pages.scenes.edit')->with(compact('scene','cameras','users'));
     }
@@ -60,7 +60,7 @@ class AdminScenesController extends Controller
 
  		Scene::create($attributes);
 
- 		return redirect('/admin/nscenes');
+ 		return redirect('/admin/scenes');
     }
 
     protected function validateScene()

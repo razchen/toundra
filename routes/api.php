@@ -18,4 +18,5 @@ Route::group(['middleware' => ['check_api_key']], function () {
 	Route::resource('/cameras', 'APICamerasController');
 	Route::resource('/models', 'APIThreeDsController');
 	Route::resource('/scenes', 'APIScenesController');
+	Route::resource('/control-definitions', 'APIControlDefinitionsController');
 });

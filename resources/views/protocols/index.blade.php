@@ -14,10 +14,17 @@
 					@if(count($protocols))
 						<div class="table table-responsive">
 							<table class="table no-margin">
+								<tr>
+									<th>Name</th>	
+									<th>Updated At</th>
+								</tr>
 								@foreach ($protocols as $protocol)
 									<tr>
 										<td>
 											<a href="/protocols/{{ $protocol->id }}">{{ $protocol->name }}</a>
+										</td>
+										<td>
+											{{ date('d-m-Y H:i:s',strtotime($protocol->updated_at)) }}
 										</td>
 									</tr>
 								@endforeach

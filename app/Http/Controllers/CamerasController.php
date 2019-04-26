@@ -43,7 +43,6 @@ class CamerasController extends Controller
     	$this->authorize('update',$camera);
 
     	$attributes = $this->validateCamera();
-
     	$camera->update($attributes);
 
     	return redirect('/cameras');

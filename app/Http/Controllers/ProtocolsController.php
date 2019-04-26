@@ -16,7 +16,7 @@ class ProtocolsController extends Controller
     public function index()
     {
  		return view('protocols.index',[
- 			'protocols' => Protocol::all()
+ 			'protocols' => Protocol::orderBy('updated_at','desc')
  		]);
     }
 

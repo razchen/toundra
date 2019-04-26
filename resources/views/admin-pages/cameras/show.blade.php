@@ -12,6 +12,9 @@
 	<div class="col-lg-6">
 		<div class="box box-info">
 			<div class="box-body">
+				<label>User</label>
+				<p>{{ $camera->user->name }}</p>
+
 				<label>Intrinsic Parameters</label>
 				<p>{{ $camera->intrinsic }}</p>
 			</div>

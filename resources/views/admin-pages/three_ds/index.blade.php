@@ -14,10 +14,17 @@
 					@if(count($three_ds))
 						<div class="table table-responsive">
 							<table class="table no-margin">
+								<tr>
+									<th>Name</th>
+									<th>Updated At</th>
+								</tr>
 								@foreach ($three_ds as $three_d)
 									<tr>
 										<td>
 											<a href="/admin/models/{{ $three_d->id }}">{{ $three_d->name }}</a>
+										</td>
+										<td>
+											{{ date('d-m-Y H:i:s',strtotime($three_d->updated_at)) }}
 										</td>
 									</tr>
 								@endforeach

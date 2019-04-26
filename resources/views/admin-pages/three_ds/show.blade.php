@@ -11,6 +11,9 @@
 		<div class="col-lg-6">
 			<div class="box box-info">
 				<div class="box-body">
+					<label>User</label>
+					<p>{{ $three_d->user->name }}</p>
+
 					<label>Description</label>
 					<p>{{ $three_d->description }}</p>
 				</div>

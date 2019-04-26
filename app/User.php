@@ -54,4 +54,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Scene::class)->orderBy('created_at','desc');
     }
+
+    public function control_definitions()
+    {
+        return $this->hasMany(ControlDefinition::class)->orderBy('created_at','desc');
+    }
 }

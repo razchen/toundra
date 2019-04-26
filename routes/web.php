@@ -19,9 +19,11 @@ Route::get('/', 'PagesController@home');
 Route::resource('/cameras', 'CamerasController');
 Route::resource('/models', 'ThreeDsController');
 Route::resource('/scenes', 'ScenesController');
+Route::resource('/control-definitions', 'ControlDefinitionsController');
 
 /* Admin Routes */
 Route::resource('/admin/cameras', 'AdminCamerasController');
 Route::resource('/admin/models', 'AdminThreeDsController');
 Route::resource('/admin/scenes', 'AdminScenesController');
+Route::resource('/admin/control-definitions', 'AdminControlDefinitionsController');
 Route::resource('/protocols', 'ProtocolsController');

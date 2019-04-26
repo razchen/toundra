@@ -15,10 +15,17 @@
 					@if(count($cameras))
 						<div class="table table-responsive">
 							<table class="table no-margin">
+								<tr>
+									<th>Name</th>
+									<th>Updated At</th>
+								</tr>
 								@foreach ($cameras as $camera)
 									<tr>
 										<td>
 											<a href="/admin/cameras/{{ $camera->id }}">{{ $camera->name }}</a>
+										</td>
+										<td>
+											{{ date('d-m-Y H:i:s',strtotime($camera->updated_at)) }}
 										</td>
 									</tr>
 								@endforeach

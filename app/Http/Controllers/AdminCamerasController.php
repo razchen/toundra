@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Camera;
 use App\User;
+use DB;
 
 class AdminCamerasController extends Controller
 {
@@ -17,20 +18,22 @@ class AdminCamerasController extends Controller
     public function index()
     {
  		return view('admin-pages.cameras.index',[
- 			'cameras' => Camera::all()
+ 			'cameras' => Camera::orderBy('updated_at','desc')->get()
  		]);
+
+
     }
 
     public function create()
     {
  		return view('admin-pages.cameras.create',[
-            'users' => User::all()
+            'users' => User::orderBy('name','asc')->get()
         ]);
     }
 
     public function edit(Camera $camera)
     {
-        $users = User::all();
+        $users = User::orderBy('name','asc')->get();
  		return view('admin-pages.cameras.edit')->with(compact('camera','users'));
     }
 
@@ -62,7 +65,7 @@ class AdminCamerasController extends Controller
     	return request()->validate([
             'user_id' => 'required|exists:users,id',
     		'name' => 'required',
-    		'intrinsic' => 'required',
+    		'intrinsic' => 'required|max:5',
     	]);
     }
 }

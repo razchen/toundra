@@ -8,7 +8,7 @@ class Camera extends Model
 {
     protected $fillable = ['user_id','name','intrinsic'];
 
-    public function owner()
+    public function user()
     {
     	return $this->belongsTo(User::class);
     }

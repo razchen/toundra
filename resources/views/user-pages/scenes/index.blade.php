@@ -14,10 +14,21 @@
 					@if(count($scenes))
 						<div class="table table-responsive">
 							<table class="table no-margin">
+								<tr>
+									<th>Name</th>
+									<th>Status</th>
+									<th>Updated At</th>
+								</tr>
 								@foreach ($scenes as $scene)
 									<tr>
 										<td>
 											<a href="/scenes/{{ $scene->id }}">{{ $scene->name }}</a>
+										</td>
+										<td>
+											{{ $scene->active ? 'Active' : 'Inactive' }}
+										</td>
+										<td>
+											{{ date('d-m-Y H:i:s',strtotime($scene->updated_at)) }}
 										</td>
 									</tr>
 								@endforeach
