@@ -25,7 +25,7 @@
 				</div>
 
 				<div class="box-footer">
-					<a href="/admin/scenes/{{ $scene->id }}/edit" class="btn btn-primary">Edit</a>
+					<a href="/admin/scenes/{{ $scene->id }}/edit" class="btn btn-primary">Editar</a>
 				</div>
 			</div>
 		</div>

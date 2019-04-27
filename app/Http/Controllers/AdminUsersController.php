@@ -50,6 +50,17 @@ class AdminUsersController extends Controller
     	return redirect('/admin/users');
     }
 
+    public function destroy(User $user)
+
+    {
+
+        $user->delete();
+
+        return redirect()->route('users.index')->with('success','Product deleted successfully');
+
+    }
+
+
     public function store()
     {
         $attributes = $this->validateUser();
