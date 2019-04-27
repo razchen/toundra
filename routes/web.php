@@ -23,6 +23,7 @@ Route::resource('/control-definitions', 'ControlDefinitionsController');
 Route::resource('/reports', 'ReportsController');
 
 /* Admin Routes */
+Route::resource('/users', 'UsersController');
 Route::resource('/admin/cameras', 'AdminCamerasController');
 Route::resource('/admin/models', 'AdminThreeDsController');
 Route::resource('/admin/scenes', 'AdminScenesController');
