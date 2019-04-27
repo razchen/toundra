@@ -43,7 +43,7 @@ class AdminUsersController extends Controller
 
         $attributes['password'] = bcrypt($attributes['password']);
         
-        // dd($attributes['password']);
+        // dd($attributes);
 
     	$user->update($attributes);
 

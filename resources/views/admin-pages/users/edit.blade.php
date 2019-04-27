@@ -23,7 +23,7 @@
                         <option selected="selected" value="{{ $user->type }}">
                             {{ $user->type }}
                         </option>
-                        <option value="">User</option>
+                        <option value="user">User</option>
                         <option value="admin">Admin</option>
 
                     </select>
