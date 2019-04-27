@@ -111,6 +111,7 @@
                   <li class="active"><a href="/register"><i class="fa fa-plus"></i> <span>Register</span></a></li>
                 @else
                   @if (Auth::user()->type == 'admin')
+                    <li class="active"><a href="/admin/users"><i class="fa fa-camera"></i> <span>Users</span></a></li>
                     <li class="active"><a href="/admin/cameras"><i class="fa fa-camera"></i> <span>Cameras</span></a></li>
                     <li class="active"><a href="/admin/models"><i class="fa fa-cube"></i> <span>Models</span></a></li>
                     <li class="active"><a href="/admin/scenes"><i class="fa fa-binoculars"></i> <span>Scenes</span></a></li>

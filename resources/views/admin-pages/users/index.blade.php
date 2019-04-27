@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 
-@section('header','Cameras')
+@section('header','Users')
 @section('breadcrumbs')
 	<li><a href="/"><i class="fa fa-home"></i> Home</a></li>
-    <li class="active">Cameras</li>
+    <li class="active">Users</li>
 @stop
 
 @section('content')
