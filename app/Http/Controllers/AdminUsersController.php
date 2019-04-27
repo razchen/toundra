@@ -19,5 +19,10 @@ class AdminUsersController extends Controller
  			'users' => User::orderBy('updated_at','desc')->get()
  		]);
     }
+
+    public function show(User $user)
+    {
+ 		return view('admin-pages.users.show')->with(compact('user'));
+    }
     
 }
