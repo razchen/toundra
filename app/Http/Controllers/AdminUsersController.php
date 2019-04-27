@@ -56,7 +56,7 @@ class AdminUsersController extends Controller
 
         $user->delete();
 
-        return redirect()->route('users.index')->with('success','Product deleted successfully');
+        return redirect()->route('users.index')->with('message','User deleted successfully');
 
     }
 
@@ -65,6 +65,7 @@ class AdminUsersController extends Controller
     {
         $attributes = $this->validateUser();
         
+        $attributes['password'] = bcrypt($attributes['password']);
         // dd($attributes);
 
  		User::create($attributes);
