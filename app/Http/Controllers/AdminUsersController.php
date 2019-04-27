@@ -24,5 +24,47 @@ class AdminUsersController extends Controller
     {
  		return view('admin-pages.users.show')->with(compact('user'));
     }
+
+    public function create()
+    {
+ 		return view('admin-pages.users.create');
+    }
+
+    public function edit(User $user)
+    {
+        // dd($user);
+ 		return view('admin-pages.users.edit')->with(compact('user'));
+    }
+
+    public function update(User $user)
+    {
+        $attributes = $this->validateUser();
+        // dd($attributes);
+    	$user->update($attributes);
+
+    	return redirect('/admin/users');
+    }
+
+    public function store()
+    {
+        $attributes = $this->validateUser();
+        
+        // dd($attributes);
+
+ 		User::create($attributes);
+
+ 		return redirect('/admin/users');
+    }
+
+    protected function validateUser()
+    {
+    	return request()->validate([
+    		'type' => 'required',
+    		'name' => 'required',
+    		'email' => 'required|min:5',
+    		'password' => 'required|min:4',
+    	]);
+    }
+
     
 }

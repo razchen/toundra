@@ -1,55 +1,62 @@
 @extends('layouts.admin')
 
-@section('header','Create Camera')
+@section('header','Create User')
 @section('breadcrumbs')
-	<li><a href="/"><i class="fa fa-home"></i> Home</a></li>
-    <li class="active">Cameras</li>
+<li><a href="/"><i class="fa fa-home"></i> Home</a></li>
+<li class="active">Users</li>
 @stop
 
 @section('content')
 
 <div class="row">
-	<div class="col-lg-6">
-		@include('errors')
+    <div class="col-lg-6">
+        @include('errors')
 
-		<div class="box box-info">
-			<form method="POST" action="/admin/cameras" class="needs-validation" novalidate>
-				{{ csrf_field() }}
-				<div class="box-body">
-					<div class="form-group">
-						<label>User</label>
-						<select class="form-control" name="user_id">
-							@foreach($users as $user)
-								<option value="{{ $user->id }}">{{ $user->id }} - {{ $user->name }}</option>
-							@endforeach
-						</select>
-					</div>
+        <div class="box box-info">
+            <form method="POST" action="/admin/users" class="needs-validation" novalidate>
+                {{ csrf_field() }}
+                <div class="box-body">
 
-					<div class="form-group">
-						<label>Camera Name</label>
-						<input 
-							class="form-control" 
-							value="{{ old('name') }}"
-							type="text" 
-							name="name" 
-							placeholder="Camera name">
-					</div>
+                    <label>Type</label>
+                    <select class="form-control" name="type">
+
+                        <option value="" >User</option>
+                        <option value="admin" >Admin</option>
+
+                    </select>
+
+
+                    <div class="form-group">
+                        <label>User Name</label>
+                        <input class="form-control" value="{{ old('name') }}" type="text" name="name"
+                            placeholder="User name">
+                    </div>
 
 					<div class="form-group">
-						<label>Intrinsic Parameters</label>
-						<textarea 
-							class="form-control" 
-							name="intrinsic" 
-							placeholder="Intrinsic Parameters" 
-							required>{{ old('intrinsic') }}</textarea>
-					</div>
-				</div>
+                        <label>Email</label>
+                        <input class="form-control" value="{{ old('email') }}" type="text" name="email"
+                            placeholder="User name">
+                    </div>
 
-				<div class="box-footer">
-					<input class="btn btn-primary" type="submit" value="Submit" />
-				</div>
-			</form>
-		</div>
-	</div>
+					<div class="form-group">
+                        <label>Password</label>
+                        <input class="form-control" value="{{ old('password') }}" type="password" name="password"
+                            placeholder="User name">
+                    </div>
+
+					<div class="form-group">
+                        <label>Confirm Password</label>
+                        <input class="form-control" value="{{ old('password') }}" type="password" name="password"
+                            placeholder="User name">
+                    </div>
+
+                </div>
+
+                <div class="box-footer">
+                    <input class="btn btn-primary" type="submit" value="Submit" />
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 @stop

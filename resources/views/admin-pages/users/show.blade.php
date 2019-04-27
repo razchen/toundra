@@ -15,8 +15,11 @@
 				<label>User</label>
 				<p>{{ $user->name }}</p>
 
-				<label>Intrinsic Parameters</label>
-				<p>{{ $user->intrinsic }}</p>
+				<label>Email</label>
+				<p>{{ $user->email }}</p>
+
+				<label>Type</label>
+				<p>{{ $user->type }}</p>
 			</div>
 			<div class="box-footer">
 				<a href="/admin/users/{{ $user->id }}/edit" class="btn btn-primary">Edit</a>
