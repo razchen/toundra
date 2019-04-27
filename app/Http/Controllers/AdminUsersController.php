@@ -10,6 +10,7 @@ class AdminUsersController extends Controller
     public function __construct()
 	{
 		$this->middleware('auth');
+		$this->middleware('admin');
     }
     
     public function index()
@@ -39,7 +40,11 @@ class AdminUsersController extends Controller
     public function update(User $user)
     {
         $attributes = $this->validateUser();
-        // dd($attributes);
+
+        $attributes['password'] = bcrypt($attributes['password']);
+        
+        // dd($attributes['password']);
+
     	$user->update($attributes);
 
     	return redirect('/admin/users');
