@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 
-@section('header','Camera: '.$camera->name)
+@section('header','Report: '.$report->instance_id)
 @section('breadcrumbs')
 	<li><a href="/"><i class="fa fa-home"></i> Home</a></li>
-    <li class="active">Cameras</li>
+    <li class="active">Reports</li>
 @stop
 
 @section('content')
@@ -12,11 +12,16 @@
 	<div class="col-lg-6">
 		<div class="box box-info">
 			<div class="box-body">
-				<label>Intrinsic Parameters</label>
-				<p>{{ $camera->intrinsic }}</p>
+				<label>Control Definition</label>
+				<p>{{ $report->control_definition->name }}</p>
 			</div>
 			<div class="box-footer">
-				<a href="/admin/cameras/{{ $camera->id }}/edit" class="btn btn-primary">Edit</a>
+				<a href="/reports/{{ $report->id }}/edit" class="btn btn-primary">Edit</a>
+				<form action="/reports/{{ $report->id }}" method="post" style="display:inline">
+					@csrf
+					@method('DELETE')
+					<button type="input" class="btn btn-danger">Delete</a>
+				</form>
 			</div>
 		</div>
 	</div>

@@ -63,6 +63,13 @@ class AdminScenesController extends Controller
  		return redirect('/admin/scenes');
     }
 
+    public function destroy(Scene $scene)
+    {
+        $scene->delete();
+
+        return redirect('/scenes');
+    }
+
     protected function validateScene()
     {
     	return request()->validate([

@@ -7,6 +7,7 @@ use App\Protocol;
 use App\ControlDefinition;
 use App\ThreeD;
 use App\User;
+use App\Report;
 
 class AdminControlDefinitionsController extends Controller
 {
@@ -62,6 +63,14 @@ class AdminControlDefinitionsController extends Controller
  		ControlDefinition::create($attributes);
 
  		return redirect('/admin/control-definitions');
+    }
+
+    public function destroy(ControlDefinition $control_definition)
+    {
+        Report::where('control_definition_id',$control_definition->id)->delete();
+        $control_definition->delete();
+
+        return redirect('/admin/control-definitions');
     }
 
     protected function validateControlDefinition()

@@ -115,12 +115,14 @@
                     <li class="active"><a href="/admin/models"><i class="fa fa-cube"></i> <span>Models</span></a></li>
                     <li class="active"><a href="/admin/scenes"><i class="fa fa-binoculars"></i> <span>Scenes</span></a></li>
                     <li class="active"><a href="/admin/control-definitions"><i class="fa fa-binoculars"></i> <span>Control Definitions</span></a></li>
+                    <li class="active"><a href="/admin/reports"><i class="fa fa-binoculars"></i> <span>Reports</span></a></li>
                     <li class="active"><a href="/protocols"><i class="fa fa-server"></i> <span>Protocols</span></a></li>
                   @else
                     <li class="active"><a href="/cameras"><i class="fa fa-camera"></i> <span>Cameras</span></a></li>
                     <li class="active"><a href="/models"><i class="fa fa-cube"></i> <span>Models</span></a></li>
                     <li class="active"><a href="/scenes"><i class="fa fa-binoculars"></i> <span>Scenes</span></a></li>
                     <li class="active"><a href="/control-definitions"><i class="fa fa-binoculars"></i> <span>Control Definitions</span></a></li>
+                    <li class="active"><a href="/reports"><i class="fa fa-binoculars"></i> <span>Reports</span></a></li>
                   @endif
                 @endguest
 

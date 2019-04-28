@@ -16,7 +16,7 @@ class ProtocolsController extends Controller
     public function index()
     {
  		return view('protocols.index',[
- 			'protocols' => Protocol::orderBy('updated_at','desc')
+ 			'protocols' => Protocol::orderBy('updated_at','desc')->get()
  		]);
     }
 
@@ -51,6 +51,13 @@ class ProtocolsController extends Controller
  		Protocol::create($attributes);
 
  		return redirect('/protocols');
+    }
+
+    public function destroy(Protocol $protocol)
+    {
+        $protocol->delete();
+
+        return redirect('/protocols');
     }
 
     protected function validateProtocol()

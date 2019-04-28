@@ -9,18 +9,27 @@ class ScenesController extends Controller
 {
     public function __construct()
 	{
-		$this->middleware('auth');
+		if (!request()->wantsJson()) {
+            $this->middleware('auth');    
+        }
 	}
 
     public function index()
     {
- 		return view('user-pages.scenes.index',[
- 			'scenes' => auth()->user()->scenes
- 		]);
+        if (request()->wantsJson()) {
+            return response()->JSON(auth()->user()->scenes);
+        } else {
+            return view('user-pages.scenes.index',[
+                'scenes' => auth()->user()->scenes
+            ]);
+        }
     }
 
     public function create()
     {
+        if (request()->wantsJson())
+            return null;
+
  		return view('user-pages.scenes.create',[
             'cameras' => auth()->user()->cameras
         ]);
@@ -28,6 +37,9 @@ class ScenesController extends Controller
 
     public function edit(Scene $scene)
     {
+        if (request()->wantsJson())
+            return null;
+        
         $this->authorize('view',$scene);
         $cameras = auth()->user()->cameras;
 
@@ -38,7 +50,11 @@ class ScenesController extends Controller
     {
     	$this->authorize('view',$scene);
 
- 		return view('user-pages.scenes.show')->with(compact('scene'));
+        if (request()->wantsJson()) {
+            return response()->JSON($scene);
+        } else {
+            return view('user-pages.scenes.show')->with(compact('scene'));
+        }	
     }
 
     public function update(Scene $scene)
@@ -49,7 +65,11 @@ class ScenesController extends Controller
 
     	$scene->update($attributes);
 
-    	return redirect('/scenes');
+        if (request()->wantsJson()) {
+            return response()->JSON($scene);
+        } else {
+            return redirect('/scenes');
+        }
     }
 
     public function store(Scene $scene)
@@ -59,9 +79,24 @@ class ScenesController extends Controller
     	$attributes = $this->validateScene();
     	$attributes['user_id'] = auth()->id();
 
- 		Scene::create($attributes);
+ 		$scene = Scene::create($attributes);
 
- 		return redirect('/scenes');
+        if (request()->wantsJson()) {
+            return response()->JSON($scene);
+        } else {
+            return redirect('/scenes');
+        }
+    }
+
+    public function destroy(Scene $scene)
+    {
+        $scene->user_id != auth()->user()->id ? abort(403) : $scene->delete();
+
+        if (request()->wantsJson()) {
+            return response()->JSON(['status' => 'success']);
+        } else {
+            return redirect('/scenes');
+        }
     }
 
     protected function validateScene()

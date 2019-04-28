@@ -40,9 +40,43 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function cameras()
+    protected function sortAllowed()
     {
-        return $this->hasMany(Camera::class)->orderBy('created_at','desc');
+        if (!request()->get('sort') && !request()->get('sort_dir')) {
+            request()->merge(['sort' => 'updated_at','sort_dir' => 'desc']);
+            return true;
+        }
+
+        return in_array(request()->get('sort'),['updated_at','created_at']) && in_array(request()->get('sort_dir'),['asc','desc']) ? true : abort(403);
+    }
+
+    protected function filtersAllowed($filters_allowed)
+    {
+        if (!request()->get('filters')) {
+            return [];
+        } elseif(!request()->get('filter_value')) {
+            return [];
+        } else {
+            if (!in_array(request()->get('filters'),$filters_allowed)) {
+                abort(403);
+            } else {
+                $filters = request()->get('filters');
+                $filter_value = request()->get('filter_value');
+                return [$filters => $filter_value];
+            }
+        }
+        
+        return (count(array_intersect($filters_allowed, array_keys(request()->filters))) == count(request()->get('filters')));
+    }
+
+    public function cameras()
+    {   
+        $filters = $this->filtersAllowed(['name','intrinsic']);
+        $this->sortAllowed();
+
+        return $this->hasMany(Camera::class)
+            ->where($filters)
+            ->orderBy(request()->get('sort'),request()->get('sort_dir'));
     }
 
     public function three_ds()

@@ -16,10 +16,24 @@
 
 					<label>Description</label>
 					<p>{{ $three_d->description }}</p>
+
+					@if (count($three_d->files))
+						<label>Uploaded Files</label>
+						@foreach ($three_d->files as $file) 
+							<div>
+								<a href="/stls/{{ $file->filename }}">{{ $file->filename }}</a>
+							</div>
+						@endforeach
+					@endif
 				</div>
 
 				<div class="box-footer">
 					<a href="/admin/models/{{ $three_d->id }}/edit" class="btn btn-primary">Edit</a>
+					<form action="/admin/models/{{ $three_d->id }}" method="post" style="display:inline">
+						@csrf
+						@method('DELETE')
+						<button type="input" class="btn btn-danger">Delete</a>
+					</form>
 				</div>
 			</div>
 		</div>

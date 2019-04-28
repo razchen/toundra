@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\ThreeD;
 use App\User;
+use DB;
 
 class AdminThreeDsController extends Controller
 {
@@ -31,13 +32,15 @@ class AdminThreeDsController extends Controller
     public function edit(ThreeD $three_d, $model)
     {
     	$three_d = ThreeD::findOrFail($model);
-        $users = User::rderBy('name','asc')->get();
+        $three_d->getFiles($three_d);
+        $users = User::orderBy('name','asc')->get();
  		return view('admin-pages.three_ds.edit')->with(compact('three_d','users'));
     }
 
     public function show(ThreeD $three_d, $model)
     {
     	$three_d = ThreeD::findOrFail($model);
+        $three_d->getFiles($three_d);
 
  		return view('admin-pages.three_ds.show')->with(compact('three_d'));
     }
@@ -47,8 +50,10 @@ class AdminThreeDsController extends Controller
     	$three_d = ThreeD::findOrFail($model);
 
     	$attributes = $this->validateThreeD();
+        validate3DFile(request()->file('3dfile'));
 
-    	$three_d->update($attributes);
+        $three_d->update($attributes);
+        add3DFile($three_d->id);
 
     	return redirect('/admin/models');
     }
@@ -56,10 +61,21 @@ class AdminThreeDsController extends Controller
     public function store()
     {
     	$attributes = $this->validateThreeD();
+        validate3DFile(request()->file('3dfile'));
 
- 		ThreeD::create($attributes);
+        $three_d = ThreeD::create($attributes);
+        add3DFile($three_d->id);
 
  		return redirect('/admin/models');
+    }
+
+    public function destroy(ThreeD $three_d, $model)
+    {
+        $three_d = ThreeD::findOrFail($model);
+        $three_d->delete();
+        DB::table('three_d_files')->where('three_d_id',$three_d->id)->delete();
+
+        return redirect('/admin/models');
     }
 
     protected function validateThreeD()

@@ -4,28 +4,41 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Camera;
+use App\Scene;
 
 class CamerasController extends Controller
 {
     public function __construct()
 	{
-		$this->middleware('auth');
+        if (!request()->wantsJson()) {
+            $this->middleware('auth');    
+        }
 	}
 
     public function index()
     {
- 		return view('user-pages.cameras.index',[
- 			'cameras' => auth()->user()->cameras
- 		]);
+        if (request()->wantsJson()) {
+            return response()->JSON(auth()->user()->cameras);
+        } else {
+            return view('user-pages.cameras.index',[
+                'cameras' => auth()->user()->cameras
+            ]);    
+        }
     }
 
     public function create()
     {
+        if (request()->wantsJson())
+            return null;
+
  		return view('user-pages.cameras.create');
     }
 
     public function edit(Camera $camera)
     {
+        if (request()->wantsJson())
+            return null;
+        
         $this->authorize('view',$camera);
         
  		return view('user-pages.cameras.edit')->with(compact('camera'));
@@ -35,7 +48,11 @@ class CamerasController extends Controller
     {
     	$this->authorize('view',$camera);
 
- 		return view('user-pages.cameras.show')->with(compact('camera'));
+        if (request()->wantsJson()) {
+            return response()->JSON($camera);
+        } else {
+            return view('user-pages.cameras.show')->with(compact('camera'));    
+        }
     }
 
     public function update(Camera $camera)
@@ -45,7 +62,11 @@ class CamerasController extends Controller
     	$attributes = $this->validateCamera();
     	$camera->update($attributes);
 
-    	return redirect('/cameras');
+        if (request()->wantsJson()) {
+            return response()->JSON($camera);
+        } else {
+            return redirect('/cameras');
+        }
     }
 
     public function store()
@@ -53,9 +74,29 @@ class CamerasController extends Controller
     	$attributes = $this->validateCamera();
     	$attributes['user_id'] = auth()->id();
 
- 		Camera::create($attributes);
+ 		$camera = Camera::create($attributes);
 
- 		return redirect('/cameras');
+ 		if (request()->wantsJson()) {
+            return response()->JSON($camera);
+        } else {
+            return redirect('/cameras');
+        }
+    }
+
+    public function destroy(Camera $camera)
+    {
+        if ($camera->user_id != auth()->user()->id) {
+            abort(403);
+        } else {
+            Scene::where('camera_id',$camera->id)->delete();
+            $camera->delete();
+        }
+
+        if (request()->wantsJson()) {
+            return response()->JSON(['status' => 'success']);
+        } else {
+            return redirect('/cameras');
+        }
     }
 
     protected function validateCamera()

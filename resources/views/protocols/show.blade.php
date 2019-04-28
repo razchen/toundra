@@ -20,6 +20,11 @@
 
 				<div class="box-footer">
 					<a href="/protocols/{{ $protocol->id }}/edit" class="btn btn-primary">Edit</a>
+					<form action="/protocols/{{ $protocol->id }}" method="post" style="display:inline">
+						@csrf
+						@method('DELETE')
+						<button type="input" class="btn btn-danger">Delete</a>
+					</form>
 				</div>
 			</div>
 		</div>

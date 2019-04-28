@@ -12,7 +12,7 @@
 	<div class="col-lg-8">
 		@include('errors')
 
-		<form method="POST" action="/admin/models" class="needs-validation" novalidate>
+		<form method="POST" action="/admin/models" class="needs-validation" enctype="multipart/form-data" novalidate>
 			{{ csrf_field() }}
 
 			<div class="box box-info">
@@ -42,6 +42,13 @@
 							class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" 
 							name="description" 
 							placeholder="Description">{{ old('description') }}</textarea>
+					</div>
+
+					<div class="form-group">
+						<label>File Upload</label><br>
+						<label class="btn btn-default">
+						    <input type="file" hidden name="3dfile">
+						</label>
 					</div>
 				</div>
 

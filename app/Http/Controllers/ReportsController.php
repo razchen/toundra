@@ -9,36 +9,52 @@ class ReportsController extends Controller
 {
     public function __construct()
 	{
-		$this->middleware('auth');
+		if (!request()->wantsJson()) {
+            $this->middleware('auth');    
+        }
 	}
 
     public function index()
     {
- 		return view('user-pages.reports.index',[
- 			'reports' => auth()->user()->control_definitions->reports
- 		]);
+        if (request()->wantsJson()) {
+            return response()->JSON(auth()->user()->load('control_definitions.reports')->control_definitions);
+        } else {
+            return view('user-pages.reports.index',[
+                'control_definitions_reports' => auth()->user()->load('control_definitions.reports')->control_definitions
+            ]);
+        }
     }
 
     public function create()
     {
+        if (request()->wantsJson())
+            return null;
+        
  		return view('user-pages.reports.create',[
-            'scenes' => auth()->user()->scenes
+            'control_definitions' => auth()->user()->control_definitions
         ]);
     }
 
     public function edit(Report $report)
     {
+        if (request()->wantsJson())
+            return null;
+        
         $this->authorize('view',$report);
-        $scenes = auth()->user()->scenes;
+        $control_definitions = auth()->user()->control_definitions;
 
- 		return view('user-pages.reports.edit')->with(compact('report','report'));
+ 		return view('user-pages.reports.edit')->with(compact('report','control_definitions'));
     }
 
     public function show(Report $report)
     {
     	$this->authorize('view',$report);
 
- 		return view('user-pages.reports.show')->with(compact('report'));
+        if (request()->wantsJson()) {
+            return response()->JSON($report);
+        } else {
+            return view('user-pages.reports.show')->with(compact('report'));
+        }   
     }
 
     public function update(Report $report)
@@ -49,7 +65,11 @@ class ReportsController extends Controller
 
     	$report->update($attributes);
 
-    	return redirect('/reports');
+        if (request()->wantsJson()) {
+            return response()->JSON($report);
+        } else {
+            return redirect('/reports');
+        }
     }
 
     public function store(Report $report)
@@ -57,20 +77,32 @@ class ReportsController extends Controller
         $this->authorize('store', $report);
 
     	$attributes = $this->validateReport();
-    	$attributes['user_id'] = auth()->id();
 
- 		Report::create($attributes);
+ 		$report = Report::create($attributes);
 
- 		return redirect('/reports');
+ 		if (request()->wantsJson()) {
+            return response()->JSON($report);
+        } else {
+            return redirect('/reports');
+        }
+    }
+
+    public function destroy(Report $report)
+    {
+        $report->control_definition->user_id != auth()->user()->id ? abort(403) : $report->delete();
+
+        if (request()->wantsJson()) {
+            return response()->JSON(['status' => 'success']);
+        } else {
+            return redirect('/reports');
+        }
     }
 
     protected function validateReport()
     {
     	return request()->validate([
-    		'name' => 'required',
-    		'transforms' => 'required|json',
-            'active' => 'required|in:0,1',
-            'camera_id' => 'required',
+    		'control_definition_id' => 'required',
+    		'instance_id' => 'required'
     	]);
     }
 }

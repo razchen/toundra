@@ -27,4 +27,5 @@ Route::resource('/admin/cameras', 'AdminCamerasController');
 Route::resource('/admin/models', 'AdminThreeDsController');
 Route::resource('/admin/scenes', 'AdminScenesController');
 Route::resource('/admin/control-definitions', 'AdminControlDefinitionsController');
+Route::resource('/admin/reports', 'AdminReportsController');
 Route::resource('/protocols', 'ProtocolsController');

@@ -12,4 +12,9 @@ class Camera extends Model
     {
     	return $this->belongsTo(User::class);
     }
+
+    public function scenes()
+    {
+    	return $this->hasMany(Scene::class);	
+    }
 }

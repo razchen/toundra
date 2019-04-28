@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 
-@section('header','Create Camera')
+@section('header','Create Report')
 @section('breadcrumbs')
 	<li><a href="/"><i class="fa fa-home"></i> Home</a></li>
-    <li class="active">Cameras</li>
+    <li class="active">Reports</li>
 @stop
 
 @section('content')
@@ -13,35 +13,26 @@
 		@include('errors')
 
 		<div class="box box-info">
-			<form method="POST" action="/admin/cameras" class="needs-validation" novalidate>
+			<form method="POST" action="/reports" class="needs-validation" novalidate>
 				{{ csrf_field() }}
 				<div class="box-body">
 					<div class="form-group">
-						<label>User</label>
-						<select class="form-control" name="user_id">
-							@foreach($users as $user)
-								<option value="{{ $user->id }}">{{ $user->id }} - {{ $user->name }}</option>
+						<label>Control Definition</label>
+						<select class="form-control" name="control_definition_id">
+							@foreach($control_definitions as $control_definition)
+								<option value="{{ $control_definition->id }}">{{ $control_definition->id }} - {{ $control_definition->name }}</option>
 							@endforeach
 						</select>
 					</div>
 
 					<div class="form-group">
-						<label>Camera Name</label>
+						<label>Inastance ID</label>
 						<input 
 							class="form-control" 
-							value="{{ old('name') }}"
+							value="{{ old('instance_id') }}"
 							type="text" 
-							name="name" 
-							placeholder="Camera name">
-					</div>
-
-					<div class="form-group">
-						<label>Intrinsic Parameters</label>
-						<textarea 
-							class="form-control" 
-							name="intrinsic" 
-							placeholder="Intrinsic Parameters" 
-							required>{{ old('intrinsic') }}</textarea>
+							name="instance_id" 
+							placeholder="Instance ID">
 					</div>
 				</div>
 

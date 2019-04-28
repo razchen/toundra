@@ -13,10 +13,15 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::fallback(function(){
+    return response()->json(['error' => 'Resource not found.'], 404);
+})->name('fallback');
+
 Route::post('/register', 'Auth\RegisterController@register');
 Route::group(['middleware' => ['check_api_key']], function () {
-	Route::resource('/cameras', 'APICamerasController');
-	Route::resource('/models', 'APIThreeDsController');
-	Route::resource('/scenes', 'APIScenesController');
-	Route::resource('/control-definitions', 'APIControlDefinitionsController');
+	Route::resource('/cameras', 'CamerasController');
+	Route::resource('/models', 'ThreeDsController');
+	Route::resource('/scenes', 'ScenesController');
+	Route::resource('/control-definitions', 'ControlDefinitionsController');
+	Route::resource('/reports', 'ReportsController');
 });

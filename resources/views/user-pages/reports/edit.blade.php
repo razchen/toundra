@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 
-@section('header','Edit '.$camera->name)
+@section('header','Edit '.$report->instance_id)
 @section('breadcrumbs')
 	<li><a href="/"><i class="fa fa-home"></i> Home</a></li>
-    <li class="active">Cameras</li>
+    <li class="active">Reports</li>
 @stop
 
 @section('content')
@@ -13,35 +13,27 @@
 		@include('errors')
 
 		<div class="box box-info">
-			<form method="POST" action="/admin/cameras/{{ $camera->id }}" class="needs-validation" novalidate>
+			<form method="POST" action="/reports/{{ $report->id }}" class="needs-validation" novalidate>
 				{{ csrf_field() }}
 				{{ method_field('PATCH') }}
 				<div class="box-body">
 					<div class="form-group">
-						<label>User</label>
-						<select class="form-control" name="user_id">
-							@foreach($users as $user)
-								<option value="{{ $user->id }}" {{ $camera->user_id == $user->id ? 'selected' : null }}>{{ $user->id }} - {{ $user->name }}</option>
+						<label>Control Definition</label>
+						<select class="form-control" name="control_definition_id">
+							@foreach($control_definitions as $control_definition)
+								<option value="{{ $control_definition->id }}" {{ $report->control_definition_id == $control_definition->id ? 'selected' : null }}>{{ $control_definition->id }} - {{ $control_definition->name }}</option>
 							@endforeach
 						</select>
 					</div>
 
 					<div class="form-group">
-						<label>Camera Name</label>
+						<label>Inastance ID</label>
 						<input 
-							class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" 
+							class="form-control" 
+							value="{{ $report->instance_id }}"
 							type="text" 
-							name="name" 
-							placeholder="Camera Name" 
-							value="{{ $camera->name }}">
-					</div>
-
-					<div class="form-group">
-						<label>Intrinsic Parameters</label>
-						<textarea 
-							class="form-control {{ $errors->has('intrinsic') ? 'is-invalid' : '' }}" 
-							name="intrinsic" 
-							placeholder="Intrinsic Parameters">{{ $camera->intrinsic }}</textarea>
+							name="instance_id" 
+							placeholder="Instance ID">
 					</div>
 				</div>
 

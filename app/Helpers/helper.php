@@ -162,6 +162,53 @@ function resizeImage($filename,$new_filename,$img_path,$new_img_path,$new_width,
     return $ret;
 }
 
+function upload3DFile($file, $name, $path) {
+    $ret = array();
+
+    $ending = $file->getClientOriginalExtension();
+
+    $allowedtypes = array(
+        'stl' => 'application/sla',
+    );
+
+    $filename = $name . '.' . $ending;
+
+    $file->move(public_path().$path, $filename);
+    $ret['file'] = $filename;
+    return $ret;
+}
+
+function validate3DFile($file) {
+    if ($file) {
+        $ending = $file->getClientOriginalExtension();
+
+        $allowedtypes = array(
+            'stl' => 'application/sla',
+        );
+
+        if (!in_array($ending,array_keys($allowedtypes))) {
+            return redirect()->back()->withInput()->withErrors(['Only .stl files are supported.']);
+        } elseif ($file->getSize() > 20000000) {
+            return redirect()->back()->withInput()->withErrors(['A maximum size of 20MB is allowed.']);
+        } elseif (!$file->isValid()) {
+            return redirect()->back()->withInput()->withErrors(['File is not valid.']);
+        }
+    }
+}
+
+function add3DFile($three_d_id) {
+    if ($three_d_id && request()->hasFile('3dfile')) {
+        DB::table('three_d_files')->where('three_d_id',$three_d_id)->delete(); 
+        $ret = upload3DFile(request()->file('3dfile'), generateRandomString(), '/stls'); 
+        if ($three_d_id) {
+            DB::table('three_d_files')->insert([
+                'three_d_id' => $three_d_id,
+                'filename' => $ret['file']
+            ]);    
+        }
+    }
+}
+
 function generateRandomString($length = 10) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
     $randomString = '';

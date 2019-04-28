@@ -17,6 +17,11 @@
 			</div>
 			<div class="box-footer">
 				<a href="/cameras/{{ $camera->id }}/edit" class="btn btn-primary">Edit</a>
+				<form action="/cameras/{{ $camera->id }}" method="post" style="display:inline">
+					@csrf
+					@method('DELETE')
+					<button type="input" class="btn btn-danger">Delete</a>
+				</form>
 			</div>
 		</div>
 	</div>

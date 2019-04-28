@@ -12,7 +12,7 @@
 	<div class="col-lg-8">
 		@include('errors')
 
-		<form method="POST" action="/admin/models/{{ $three_d->id }}" class="needs-validation" novalidate>
+		<form method="POST" action="/admin/models/{{ $three_d->id }}" class="needs-validation" enctype="multipart/form-data" novalidate>
 			{{ csrf_field() }}
 			{{ method_field('PATCH') }}
 
@@ -43,6 +43,24 @@
 							class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" 
 							name="description" 
 							placeholder="Description">{{ $three_d->description }}</textarea>
+					</div>
+
+					@if (count($three_d->files))
+						<div class="form-group">
+							<label>Uploaded Files</label>
+							@foreach ($three_d->files as $file) 
+								<div>
+									<a href="/stls/{{ $file->filename }}">{{ $file->filename }}</a>
+								</div>
+							@endforeach
+						</div>
+					@endif
+
+					<div class="form-group">
+						<label>File Upload</label><br>
+						<label class="btn btn-default">
+						    <input type="file" hidden name="3dfile">
+						</label>
 					</div>
 				</div>
 

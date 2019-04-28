@@ -22,13 +22,18 @@
 				<p>{{ $control_definition->json_data }}</p>
 
 				<label>Model</label>
-				<p>{{ $control_definition->three_d->name }}</p>
+				<p>{{ isset($control_definition->three_d) ? $control_definition->three_d->name : null }}</p>
 
 				<label>Protocol</label>
-				<p>{{ $control_definition->protocol->name }}</p>
+				<p>{{ isset($control_definition->protocol) ? $control_definition->protocol->name : null }}</p>
 			</div>
 			<div class="box-footer">
 				<a href="/admin/control-definitions/{{ $control_definition->id }}/edit" class="btn btn-primary">Edit</a>
+				<form action="/admin/control-definitions/{{ $control_definition->id }}" method="post" style="display:inline">
+					@csrf
+					@method('DELETE')
+					<button type="input" class="btn btn-danger">Delete</a>
+				</form>
 			</div>
 		</div>
 	</div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Camera;
 use App\User;
+use App\Scene;
 use DB;
 
 class AdminCamerasController extends Controller
@@ -20,8 +21,6 @@ class AdminCamerasController extends Controller
  		return view('admin-pages.cameras.index',[
  			'cameras' => Camera::orderBy('updated_at','desc')->get()
  		]);
-
-
     }
 
     public function create()
@@ -60,12 +59,20 @@ class AdminCamerasController extends Controller
  		return redirect('/admin/cameras');
     }
 
+    public function destroy(Camera $camera)
+    {
+        Scene::where('camera_id',$camera->id)->delete();
+        $camera->delete();
+
+        return redirect('/admin/cameras');
+    }
+
     protected function validateCamera()
     {
     	return request()->validate([
             'user_id' => 'required|exists:users,id',
     		'name' => 'required',
-    		'intrinsic' => 'required|max:5',
+    		'intrinsic' => 'required',
     	]);
     }
 }

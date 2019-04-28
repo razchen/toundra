@@ -6,23 +6,33 @@ use Illuminate\Http\Request;
 use App\Camera;
 use App\Protocol;
 use App\ControlDefinition;
+use App\Report;
 
 class ControlDefinitionsController extends Controller
 {
     public function __construct()
 	{
-		$this->middleware('auth');
+		if (!request()->wantsJson()) {
+            $this->middleware('auth');    
+        }
 	}
 
     public function index()
     {
- 		return view('user-pages.control-definitions.index',[
- 			'control_definitions' => auth()->user()->control_definitions
- 		]);
+        if (request()->wantsJson()) {
+            return response()->JSON(auth()->user()->control_definitions);
+        } else {
+            return view('user-pages.control-definitions.index',[
+                'control_definitions' => auth()->user()->control_definitions
+            ]);
+        }
     }
 
     public function create()
     {
+        if (request()->wantsJson())
+            return null;
+        
  		return view('user-pages.control-definitions.create',[
             'three_ds' => auth()->user()->three_ds,
             'protocols' => Protocol::all()
@@ -31,6 +41,9 @@ class ControlDefinitionsController extends Controller
 
     public function edit(ControlDefinition $control_definition)
     {
+        if (request()->wantsJson())
+            return null;
+        
         $this->authorize('view',$control_definition);
         
  		return view('user-pages.control-definitions.edit',[
@@ -43,8 +56,12 @@ class ControlDefinitionsController extends Controller
     public function show(ControlDefinition $control_definition)
     {
     	$this->authorize('view',$control_definition);
-
- 		return view('user-pages.control-definitions.show')->with(compact('control_definition'));
+ 		
+        if (request()->wantsJson()) {
+            return response()->JSON($control_definition);
+        } else {
+            return view('user-pages.control-definitions.show')->with(compact('control_definition'));
+        }   
     }
 
     public function update(ControlDefinition $control_definition)
@@ -55,7 +72,11 @@ class ControlDefinitionsController extends Controller
 
     	$control_definition->update($attributes);
 
-    	return redirect('/control-definitions');
+        if (request()->wantsJson()) {
+            return response()->JSON($control_definition);
+        } else {
+            return redirect('/control-definitions');
+        }
     }
 
     public function store(ControlDefinition $control_definition)
@@ -65,9 +86,26 @@ class ControlDefinitionsController extends Controller
     	$attributes = $this->validateControlDefinition();
     	$attributes['user_id'] = auth()->id();
 
- 		ControlDefinition::create($attributes);
+ 		$control_definition = ControlDefinition::create($attributes);
 
- 		return redirect('/control-definitions');
+        if (request()->wantsJson()) {
+            return response()->JSON($control_definition);
+        } else {
+            return redirect('/control-definitions');
+        }
+    }
+
+    public function destroy(ControlDefinition $control_definition)
+    {
+        $control_definition->user_id != auth()->user()->id ? 
+            abort(403) : 
+            Report::where('control_definition_id',$control_definition->id)->delete() && $control_definition->delete();
+
+        if (request()->wantsJson()) {
+            return response()->JSON(['status' => 'success']);
+        } else {
+            return redirect('/control-definitions');
+        }
     }
 
     protected function validateControlDefinition()

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Report;
 
 class ControlDefinition extends Model
 {
@@ -23,9 +24,9 @@ class ControlDefinition extends Model
         return $this->belongsTo(ThreeD::class);
     }
 
-    public function control_definitions()
+    public function reports()
     {
-        return $this->hasMany(ControlOperation::class);
+        return $this->hasMany(Report::class);
     }
 
     public function ThreeDOwnedByUser($three_d_id)

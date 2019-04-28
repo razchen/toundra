@@ -18,11 +18,16 @@
 					<p>{{ $scene->active ? 'Active' : 'Inactive' }}</p>
 
 					<label>Camera</label>
-					<p>{{ $scene->camera->name }}</p>
+					<p>{{ isset($scene->camera) ? $scene->camera->name : null }}</p>
 				</div>
 
 				<div class="box-footer">
 					<a href="/scenes/{{ $scene->id }}/edit" class="btn btn-primary">Edit</a>
+					<form action="/scenes/{{ $scene->id }}" method="post" style="display:inline">
+						@csrf
+						@method('DELETE')
+						<button type="input" class="btn btn-danger">Delete</a>
+					</form>
 				</div>
 			</div>
 		</div>
