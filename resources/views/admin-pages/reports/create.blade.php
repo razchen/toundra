@@ -11,7 +11,7 @@
 <div class="row">
 	<div class="col-lg-6">
 		@include('errors')
-		TEST 2
+		TEST master
 		<div class="box box-info">
 			<form method="POST" action="/admin/reports" class="needs-validation" novalidate>
 				{{ csrf_field() }}
