@@ -50,25 +50,25 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($exception instanceof ModelNotFoundException) {
+        if ($exception instanceof ModelNotFoundException && $request->wantsJson()) {
             return response()->json([
                 'error' => 'Resource item not found.'
             ], 404);
         }
 
-        if ($exception instanceof NotFoundHttpException) {
+        if ($exception instanceof NotFoundHttpException && $request->wantsJson()) {
             return response()->json([
                 'error' => 'Resource not found.'
             ], 404);
         }
 
-        if ($exception instanceof MethodNotAllowedHttpException) {
+        if ($exception instanceof MethodNotAllowedHttpException && $request->wantsJson()) {
             return response()->json([
                 'error' => 'Method not allowed.'
             ], 405);
         }
 
-        if ($exception instanceof AuthorizationException) {
+        if ($exception instanceof AuthorizationException && $request->wantsJson()) {
             return response()->json([
                 'error' => 'Access Denied.'
             ], 403);
