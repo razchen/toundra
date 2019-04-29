@@ -10,10 +10,10 @@
 
 <div class="row">
     <div class="col-lg-6">
-	
-        @if(isset($message))
-        <div class="alert alert-success" role="alert">
-            {{$message}}
+
+        @if(Session::has('message'))
+        <div class="callout callout-success" role="alert">
+            {{Session::get('message')}}
         </div>
         @endif
 
