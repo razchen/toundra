@@ -32,7 +32,7 @@ class AdminUsersController extends Controller
 
     public function edit(User $user)
     {
- 		return view('admin-pages.users.edit')->with(compact('user'));
+        return view('admin-pages.users.edit')->with(compact('user'));
     }
 
     public function update(User $user)
@@ -73,7 +73,7 @@ class AdminUsersController extends Controller
     	return request()->validate([
     		'type' => 'required',
     		'name' => 'required',
-    		'email' => 'required|min:5',
+    		'email' => 'required|unique:users,email',
     		'password' => 'required|min:4',
     	]);
     }
