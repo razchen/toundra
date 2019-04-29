@@ -50,12 +50,6 @@
                             placeholder="Password">
                     </div>
 
-					<div class="form-group">
-                        <label>Confirm Password</label>
-                        <input class="form-control" value="{{ old('password') }}" type="password" name="password"
-                            placeholder="Confirm password">
-                    </div>
-
                 </div>
 
                 <div class="box-footer">

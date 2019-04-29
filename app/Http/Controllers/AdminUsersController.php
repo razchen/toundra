@@ -37,9 +37,13 @@ class AdminUsersController extends Controller
 
     public function update(User $user)
     {
-        $attributes = $this->validateUser();
+        $attributes = $this->validateUser($user->id);
 
-        $attributes['password'] = bcrypt($attributes['password']);
+        // dd(isset($attributes['password']));
+        if( isset($attributes['password'])){
+            $attributes['password'] = bcrypt($attributes['password']);
+        }
+        
         
     	$user->update($attributes);
 
@@ -60,7 +64,7 @@ class AdminUsersController extends Controller
     public function store()
     {
         $attributes = $this->validateUser();
-        
+
         $attributes['password'] = bcrypt($attributes['password']);
 
  		User::create($attributes);
@@ -68,14 +72,12 @@ class AdminUsersController extends Controller
  		return redirect('/admin/users');
     }
 
-    protected function validateUser()
+    protected function validateUser($user_id = false)
     {
-    	return request()->validate([
-    		'type' => 'sometimes|required',
+        return request()->validate([
     		'name' => 'required',
-    		'email' => 'required|unique:users,email',
-    		'api_key' => 'required|unique:users,api_key|min:4',
-    		'password' => 'required|min:4',
+            'email' => 'required|unique:users,email'.($user_id ? ','.$user_id : null),
+    		'api_key' => 'required|min:4|unique:users,api_key'.($user_id ? ','.$user_id : null),
     	]);
     }
 

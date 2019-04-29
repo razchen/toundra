@@ -42,15 +42,15 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Password</label>
-                        <input class="form-control" value="{{ $user->password }}" type="password" name="password"
-                            placeholder="Password">
+                        <label>API KEY</label>
+                        <input class="form-control" value="{{ $user->api_key }}" type="text" name="api_key"
+                            placeholder="API KEY">
                     </div>
 
                     <div class="form-group">
-                        <label>Confirm Password</label>
-                        <input class="form-control" value="{{ old('password') }}" type="password" name="password"
-                            placeholder="Confirm password">
+                        <label>Password</label>
+                        <input class="form-control" type="password" name="password"
+                            placeholder="Password">
                     </div>
 
                     <div class="box-footer">
