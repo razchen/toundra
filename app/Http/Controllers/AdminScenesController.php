@@ -65,7 +65,7 @@ class AdminScenesController extends Controller
     {
         $scene->delete();
 
-        return redirect('/scenes')->with('message','The scene ' . $scene->name . ' deleted successfully');
+        return redirect('/admin/scenes')->with('message','The scene ' . $scene->name . ' deleted successfully');
     }
 
     protected function validateScene()
