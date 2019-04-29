@@ -21,14 +21,23 @@
                 <label>Type</label>
                 <p>{{ $user->type }}</p>
             </div>
-            <div class="box-footer">
+           <!--  <div class="box-footer">
                 <form action="{{ url('/admin/users', ['id' => $user->id]) }}" method="post">
-					<!-- Edit Button -->
+
                     <a href="/admin/users/{{ $user->id }}/edit" class="btn btn-primary">Edit</a>
-					<!-- Delete Button -->
+                    
                     <input class="btn btn-danger" type="submit" value="Delete" />
                     <input type="hidden" name="_method" value="delete" />
                     {!! csrf_field() !!}
+                </form>
+            </div> -->
+
+            <div class="box-footer">
+                <a href="/admin/users/{{ $user->id }}/edit" class="btn btn-primary">Edit</a>
+                <form action="/admin/users/{{ $user->id }}" method="post" style="display:inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="input" class="btn btn-danger">Delete</a>
                 </form>
             </div>
         </div>
