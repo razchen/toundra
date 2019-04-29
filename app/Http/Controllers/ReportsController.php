@@ -17,10 +17,10 @@ class ReportsController extends Controller
     public function index()
     {
         if (request()->wantsJson()) {
-            return response()->JSON(auth()->user()->load('control_definitions.reports')->control_definitions);
+            return response()->JSON(Report::getAllAuthReports());
         } else {
             return view('user-pages.reports.index',[
-                'control_definitions_reports' => auth()->user()->load('control_definitions.reports')->control_definitions
+                'reports' => Report::getAllAuthReports()
             ]);
         }
     }
