@@ -18,16 +18,13 @@
                 {{ method_field('PATCH') }}
                 <div class="box-body">
 
-                    <label>Type</label>
-                    <select class="form-control" name="type">
-                        <option selected="selected" value="{{ $user->type }}">
-                            {{ $user->type }}
-                        </option>
-                        <option value="">User</option>
-                        <option value="admin">Admin</option>
-
-                    </select>
-
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select class="form-control" name="type">
+                            <option value="" {{ ($user->type == '' ? 'selected' : null) }}>User</option>
+                            <option value="admin" {{ ($user->type == 'admin' ? 'selected' : null) }}>Admin</option>
+                        </select>
+                    </div>
 
                     <div class="form-group">
                         <label>User Name</label>
@@ -49,8 +46,7 @@
 
                     <div class="form-group">
                         <label>Password</label>
-                        <input class="form-control" type="password" name="password"
-                            placeholder="Password">
+                        <input class="form-control" type="password" name="password" placeholder="Password">
                     </div>
 
                     <div class="box-footer">
