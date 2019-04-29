@@ -54,8 +54,6 @@ class AdminScenesController extends Controller
 
     public function store(Scene $scene)
     {
-        $this->authorize('store', $scene);
-
     	$attributes = $this->validateScene();
 
  		Scene::create($attributes);

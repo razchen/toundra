@@ -27,9 +27,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label>User Name</label>
+                        <label>Name</label>
                         <input class="form-control" value="{{ $user->name }}" type="text" name="name"
-                            placeholder="User name">
+                            placeholder="Name">
                     </div>
 
                     <div class="form-group">
