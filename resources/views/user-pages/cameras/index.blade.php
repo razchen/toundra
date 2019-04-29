@@ -10,6 +10,7 @@
 
 	<div class="row">
 		<div class="col-lg-6">
+			@include('messages')
 			<div class="box box-info dataTables_wrapper form-inline dt-bootstrap">
 				<div class="box-body">
 					@if(count($cameras))	

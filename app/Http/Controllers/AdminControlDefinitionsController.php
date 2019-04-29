@@ -70,7 +70,7 @@ class AdminControlDefinitionsController extends Controller
         Report::where('control_definition_id',$control_definition->id)->delete();
         $control_definition->delete();
 
-        return redirect('/admin/control-definitions');
+        return redirect('/admin/control-definitions')->with('message','The control definition ' . $control_definition->name . ' deleted successfully');
     }
 
     protected function validateControlDefinition()

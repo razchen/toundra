@@ -75,7 +75,7 @@ class AdminThreeDsController extends Controller
         $three_d->delete();
         DB::table('three_d_files')->where('three_d_id',$three_d->id)->delete();
 
-        return redirect('/admin/models');
+        return redirect('/admin/models')->with('message','The model ' . $model->name . ' deleted successfully');
     }
 
     protected function validateThreeD()

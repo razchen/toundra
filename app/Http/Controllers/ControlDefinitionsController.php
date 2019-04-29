@@ -107,7 +107,7 @@ class ControlDefinitionsController extends Controller
         if (request()->wantsJson()) {
             return response()->JSON(['status' => 'success']);
         } else {
-            return redirect('/control-definitions');
+            return redirect('/control-definitions')->with('message','The control definition ' . $control_definition->name . ' deleted successfully');
         }
     }
 

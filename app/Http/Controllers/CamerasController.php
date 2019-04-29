@@ -95,7 +95,7 @@ class CamerasController extends Controller
         if (request()->wantsJson()) {
             return response()->JSON(['status' => 'success']);
         } else {
-            return redirect('/cameras');
+            return redirect('/cameras')->with('message','The camera ' . $camera->name . ' deleted successfully');
         }
     }
 

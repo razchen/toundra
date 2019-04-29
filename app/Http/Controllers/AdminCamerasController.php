@@ -64,7 +64,7 @@ class AdminCamerasController extends Controller
         Scene::where('camera_id',$camera->id)->delete();
         $camera->delete();
 
-        return redirect('/admin/cameras');
+        return redirect('/admin/cameras')->with('message','The camera ' . $camera->name . ' deleted successfully');
     }
 
     protected function validateCamera()

@@ -10,6 +10,7 @@
 
 	<div class="row">
 		<div class="col-lg-6">
+			@include('messages')
 			<div class="box box-info">
 				<div class="box-body">
 					@if(count($control_definitions))

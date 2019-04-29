@@ -95,7 +95,7 @@ class ScenesController extends Controller
         if (request()->wantsJson()) {
             return response()->JSON(['status' => 'success']);
         } else {
-            return redirect('/scenes');
+            return redirect('/scenes')->with('message','The scene ' . $scene->name . ' deleted successfully');
         }
     }
 

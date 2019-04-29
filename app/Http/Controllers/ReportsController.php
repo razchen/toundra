@@ -94,7 +94,7 @@ class ReportsController extends Controller
         if (request()->wantsJson()) {
             return response()->JSON(['status' => 'success']);
         } else {
-            return redirect('/reports');
+            return redirect('/reports')->with('message','The report ' . $report->name . ' deleted successfully');
         }
     }
 

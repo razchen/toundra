@@ -52,7 +52,7 @@ class AdminUsersController extends Controller
     {
         $user->delete();
 
-        return redirect()->route('users.index')->with('message','The user ' . $user->name . ' deleted successfully');
+        return redirect('/users')->with('message','The user ' . $user->name . ' deleted successfully');
     }
 
 

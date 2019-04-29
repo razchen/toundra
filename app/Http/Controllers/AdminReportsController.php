@@ -63,7 +63,7 @@ class AdminReportsController extends Controller
     {
         $report->delete();
 
-        return redirect('/admin/reports');
+        return redirect('/admin/reports')->with('message','The report ' . $report->instance_id . ' deleted successfully');
     }
 
     protected function validateReport()

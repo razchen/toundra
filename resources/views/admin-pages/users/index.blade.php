@@ -10,13 +10,7 @@
 
 <div class="row">
     <div class="col-lg-6">
-
-        @if(Session::has('message'))
-        <div class="callout callout-success" role="alert">
-            {{Session::get('message')}}
-        </div>
-        @endif
-
+        @include('messages')
         <div class="box box-info">
             <div class="box-body">
                 @if(count($users))
