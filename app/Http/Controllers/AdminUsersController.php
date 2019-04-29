@@ -39,11 +39,9 @@ class AdminUsersController extends Controller
     {
         $attributes = $this->validateUser($user->id);
 
-        // dd(isset($attributes['password']));
         if( isset($attributes['password'])){
             $attributes['password'] = bcrypt($attributes['password']);
         }
-        
         
     	$user->update($attributes);
 
@@ -64,8 +62,8 @@ class AdminUsersController extends Controller
     public function store()
     {
         $attributes = $this->validateUser();
-
-        $attributes['password'] = bcrypt($attributes['password']);
+        $attributes["type"]=request()->type;
+        $attributes["password"]=bcrypt(request()->password);
 
  		User::create($attributes);
 

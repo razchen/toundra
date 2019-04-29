@@ -20,7 +20,7 @@
                     <label>Type</label>
                     <select class="form-control" name="type">
 
-                        <option value="" >User</option>
+                        <option value="''" >User</option>
                         <option value="admin" >Admin</option>
 
                     </select>
@@ -45,9 +45,9 @@
                     </div>
 
 					<div class="form-group">
-                        <label>Password</label>
+                        <label>Confirm Password</label>
                         <input class="form-control" value="{{ old('password') }}" type="password" name="password"
-                            placeholder="Password">
+                            placeholder="Confirm password">
                     </div>
 
                 </div>

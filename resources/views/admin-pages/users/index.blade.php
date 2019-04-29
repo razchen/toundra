@@ -10,12 +10,12 @@
 
 <div class="row">
     <div class="col-lg-6">
-		
-        @isset($message)
+	
+        @if(isset($message))
         <div class="alert alert-success" role="alert">
             {{$message}}
         </div>
-        @endisset
+        @endif
 
         <div class="box box-info">
             <div class="box-body">
