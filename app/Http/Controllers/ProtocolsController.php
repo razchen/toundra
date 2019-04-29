@@ -57,7 +57,7 @@ class ProtocolsController extends Controller
     {
         $protocol->delete();
 
-        return redirect('/protocols')->with('message','The protocol ' . $control_definition->name . ' deleted successfully');
+        return redirect('/protocols')->with('message','The protocol ' . $protocol->name . ' deleted successfully');
     }
 
     protected function validateProtocol()
