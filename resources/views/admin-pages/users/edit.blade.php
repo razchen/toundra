@@ -38,19 +38,19 @@
                     <div class="form-group">
                         <label>Email</label>
                         <input class="form-control" value="{{ $user->email }}" type="text" name="email"
-                            placeholder="User name">
+                            placeholder="Email">
                     </div>
 
                     <div class="form-group">
                         <label>Password</label>
                         <input class="form-control" value="{{ $user->password }}" type="password" name="password"
-                            placeholder="User name">
+                            placeholder="Password">
                     </div>
 
                     <div class="form-group">
                         <label>Confirm Password</label>
                         <input class="form-control" value="{{ old('password') }}" type="password" name="password"
-                            placeholder="User name">
+                            placeholder="Confirm password">
                     </div>
 
                     <div class="box-footer">
