@@ -14,6 +14,10 @@
 			<div class="box-body">
 				<label>Control Definition</label>
 				<p>{{ $report->control_definition->name }}</p>
+
+				<label>JSON</label>
+				<p>{{ $report->json_data }}</p>
+
 			</div>
 			<div class="box-footer">
 				<a href="/admin/reports/{{ $report->id }}/edit" class="btn btn-primary">Edit</a>

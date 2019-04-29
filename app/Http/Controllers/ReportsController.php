@@ -61,7 +61,7 @@ class ReportsController extends Controller
     {
     	$this->authorize('update',$report);
 
-    	$attributes = $this->validateReport();
+        $attributes = $this->validateReport();
 
     	$report->update($attributes);
 
@@ -76,7 +76,7 @@ class ReportsController extends Controller
     {
         $this->authorize('store', $report);
 
-    	$attributes = $this->validateReport();
+        $attributes = $this->validateReport();
 
  		$report = Report::create($attributes);
 
@@ -102,7 +102,8 @@ class ReportsController extends Controller
     {
     	return request()->validate([
     		'control_definition_id' => 'required',
-    		'instance_id' => 'required'
+            'instance_id' => 'required',
+            'json_data' => 'required|json'
     	]);
     }
 }

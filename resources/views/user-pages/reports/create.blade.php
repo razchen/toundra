@@ -34,6 +34,13 @@
 							name="instance_id" 
 							placeholder="Instance ID">
 					</div>
+
+					<div class="form-group">
+                        <label>JSON</label>
+                        <textarea class="form-control" name="json_data" placeholder="JSON"
+                            required>{{ old('json_data') }}</textarea>
+                    </div>
+
 				</div>
 
 				<div class="box-footer">

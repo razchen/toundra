@@ -43,7 +43,7 @@ class AdminReportsController extends Controller
 
     public function update(Report $report)
     {
-    	$attributes = $this->validateReport();
+        $attributes = $this->validateReport();
 
     	$report->update($attributes);
 
@@ -70,7 +70,8 @@ class AdminReportsController extends Controller
     {
     	return request()->validate([
     		'control_definition_id' => 'required',
-    		'instance_id' => 'required'
+            'instance_id' => 'required',
+            'json_data' => 'required|json'
     	]);
     }
 }
