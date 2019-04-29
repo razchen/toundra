@@ -45,9 +45,9 @@
                     </div>
 
 					<div class="form-group">
-                        <label>Confirm Password</label>
+                        <label>Password</label>
                         <input class="form-control" value="{{ old('password') }}" type="password" name="password"
-                            placeholder="Confirm password">
+                            placeholder="Password">
                     </div>
 
                 </div>
