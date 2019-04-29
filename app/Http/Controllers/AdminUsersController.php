@@ -71,9 +71,10 @@ class AdminUsersController extends Controller
     protected function validateUser()
     {
     	return request()->validate([
-    		'type' => 'required',
+    		'type' => 'sometimes|required',
     		'name' => 'required',
     		'email' => 'required|unique:users,email',
+    		'api_key' => 'required|unique:users,api_key|min:4',
     		'password' => 'required|min:4',
     	]);
     }

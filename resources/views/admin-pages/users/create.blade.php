@@ -32,6 +32,12 @@
                             placeholder="User name">
                     </div>
 
+                    <div class="form-group">
+                        <label>API KEY</label>
+                        <input class="form-control" value="{{ old('name') }}" type="text" name="api_key"
+                            placeholder="API KEY">
+                    </div>
+
 					<div class="form-group">
                         <label>Email</label>
                         <input class="form-control" value="{{ old('email') }}" type="text" name="email"
