@@ -97,10 +97,13 @@ class ControlDefinitionsController extends Controller
 
     public function destroy(ControlDefinition $control_definition)
     {
-        $control_definition->user_id != auth()->user()->id ? 
-            abort(403) : 
-            Report::where('control_definition_id',$control_definition->id)->delete() && $control_definition->delete();
-
+        if ($control_definition->user_id != auth()->user()->id) {
+            abort(403);
+        } else {
+            Report::where('control_definition_id',$control_definition->id)->delete();
+            $control_definition->delete();
+        }
+         
         if (request()->wantsJson()) {
             return response()->JSON(['status' => 'success']);
         } else {
