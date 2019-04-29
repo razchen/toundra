@@ -17,14 +17,13 @@
                 {{ csrf_field() }}
                 <div class="box-body">
 
-                    <label>Type</label>
-                    <select class="form-control" name="type">
-
-                        <option value="''" >User</option>
-                        <option value="admin" >Admin</option>
-
-                    </select>
-
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select class="form-control" name="type">
+                            <option value="''"  {{ ( old('type') == '' ? 'selected' : null) }}>User</option>
+                            <option value="admin" {{ ( old('type') == 'admin' ? 'selected' : 'Admin') }}>Admin</option>
+                        </select>
+                    </div>
 
                     <div class="form-group">
                         <label>User Name</label>
@@ -38,13 +37,13 @@
                             placeholder="API KEY">
                     </div>
 
-					<div class="form-group">
+                    <div class="form-group">
                         <label>Email</label>
                         <input class="form-control" value="{{ old('email') }}" type="text" name="email"
                             placeholder="Email">
                     </div>
 
-					<div class="form-group">
+                    <div class="form-group">
                         <label>Password</label>
                         <input class="form-control" value="{{ old('password') }}" type="password" name="password"
                             placeholder="Password">
