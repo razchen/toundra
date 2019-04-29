@@ -103,7 +103,7 @@ class ThreeDsController extends Controller
         if (request()->wantsJson()) {
             return response()->JSON(['status' => 'success']);
         } else {
-            return redirect('/models')->with('message','The model ' . $model->name . ' deleted successfully');
+            return redirect('/models')->with('message','The model ' . $three_d->name . ' deleted successfully');
         }
     }
 
