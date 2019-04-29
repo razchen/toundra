@@ -49,13 +49,10 @@ class AdminUsersController extends Controller
     }
 
     public function destroy(User $user)
-
     {
-
         $user->delete();
 
         return redirect()->route('users.index')->with('message','The user ' . $user->name . ' deleted successfully');
-
     }
 
 
