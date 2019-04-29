@@ -2,8 +2,8 @@
 
 @section('header','Create Report')
 @section('breadcrumbs')
-<li><a href="/"><i class="fa fa-home"></i> Home</a></li>
-<li class="active">Reports</li>
+    <li><a href="/"><i class="fa fa-home"></i> Home</a></li>
+    <li class="active">Reports</li>
 @stop
 
 @section('content')
@@ -20,15 +20,18 @@
                         <label>Control Definition</label>
                         <select class="form-control" name="control_definition_id">
                             @foreach($control_definitions as $control_definition)
-                            <option value="{{ $control_definition->id }}">{{ $control_definition->id }} -
-                                {{ $control_definition->name }}</option>
+                                <option value="{{ $control_definition->id }}">{{ $control_definition->id }} -{{ $control_definition->name }}</option>
                             @endforeach
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label>Inastance ID</label>
-                        <input class="form-control" value="{{ old('instance_id') }}" type="text" name="instance_id"
+                        <input 
+                            class="form-control" 
+                            value="{{ old('instance_id') }}" 
+                            type="text" 
+                            name="instance_id"
                             placeholder="Instance ID">
                     </div>
 
