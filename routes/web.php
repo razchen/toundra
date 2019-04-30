@@ -14,6 +14,7 @@
 Auth::routes();
 
 Route::get('/', 'PagesController@home');
+Route::get('/dashboard', 'PagesController@dashboard');
 
 /* User Routes */
 Route::resource('/cameras', 'CamerasController');
