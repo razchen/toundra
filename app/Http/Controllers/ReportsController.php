@@ -103,7 +103,8 @@ class ReportsController extends Controller
     	return request()->validate([
     		'control_definition_id' => 'required',
             'instance_id' => 'required',
-            'json_data' => 'required|json'
+            'json_data' => 'required|json',
+            'active' => 'required'
     	]);
     }
 }

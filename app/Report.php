@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Report extends Model
 {
-    protected $fillable = ['instance_id','control_definition_id', 'json_data'];
+    protected $fillable = ['instance_id','control_definition_id', 'json_data', 'active'];
 
     public function control_definition()
     {
