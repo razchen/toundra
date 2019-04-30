@@ -18,6 +18,9 @@
 				<label>JSON</label>
 				<p>{{ $report->json_data }}</p>
 
+				<label>Status</label>
+				<p>{{ $report->active ? 'Active' : 'Inactive' }}</p>
+
 			</div>
 			<div class="box-footer">
 				<a href="/reports/{{ $report->id }}/edit" class="btn btn-primary">Edit</a>
