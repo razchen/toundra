@@ -40,6 +40,18 @@
 						<textarea class="form-control" name="json_data" placeholder="JSON"
 							required>{{ old('json_data') }}</textarea>
 					</div>
+
+					<div class="form-group">
+						<label>Status</label>
+						<select 
+							class="form-control"
+							name="active"
+							placeholder="Active"
+							required>
+							<option value="0" {{ !old('active') ? 'selected' : null }}>Inactive</option>
+							<option value="1" {{ old('active') ? 'selected' : null }}>Active</option>
+						</select>
+					</div>
 				</div>
 
 				<div class="box-footer">

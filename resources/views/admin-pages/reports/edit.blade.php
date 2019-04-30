@@ -44,6 +44,17 @@
 							placeholder="JSON">{{ $report->json_data }}</textarea>
 					</div>
 
+					<div class="form-group">
+						<label>Status</label>
+						<select 
+							class="form-control"
+							name="active"
+							placeholder="Active">
+							<option value="0" {{ !$report->active ? 'selected' : null }}>Inactive</option>
+							<option value="1" {{ $report->active ? 'selected' : null }}>Active</option>
+						</select>
+					</div>
+
 				</div>
 
 				<div class="box-footer">
