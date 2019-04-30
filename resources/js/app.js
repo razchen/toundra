@@ -7,7 +7,7 @@
 
 require('./bootstrap');
 import 'admin-lte/dist/js/adminlte.min.js';
-import 'https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js';
+import 'chart.js/dist/Chart.js';
 
 window.Vue = require('vue');
 
