@@ -95,3 +95,9 @@ CREATE DATABASE toundra;
 ```bash
 mysql toundra < toundra.sql
 ```
+
+9. Run Webpack
+
+```bash
+npm run prod
+```
