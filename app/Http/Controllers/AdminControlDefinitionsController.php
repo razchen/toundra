@@ -16,6 +16,11 @@ class AdminControlDefinitionsController extends Controller
 		$this->middleware('auth');
 	}
 
+    /**
+     * Display a listing of the ControlDefinitions.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
  		return view('admin-pages.control-definitions.index',[
@@ -23,6 +28,11 @@ class AdminControlDefinitionsController extends Controller
  		]);
     }
 
+    /**
+     * Show the form for creating a new ControlDefinition.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
  		return view('admin-pages.control-definitions.create',[
@@ -32,6 +42,12 @@ class AdminControlDefinitionsController extends Controller
         ]);
     }
 
+    /**
+     * Show the form for editing the specified ControlDefinition.
+     *
+     * @param  \App\ControlDefinition  $control_definition
+     * @return \Illuminate\Http\Response
+     */
     public function edit(ControlDefinition $control_definition)
     {        
  		return view('admin-pages.control-definitions.edit',[
@@ -42,11 +58,24 @@ class AdminControlDefinitionsController extends Controller
         ]);
     }
 
+    /**
+     * Display the specified ControlDefinition.
+     *
+     * @param  \App\ControlDefinition  $control_definition
+     * @return \Illuminate\Http\Response
+     */
     public function show(ControlDefinition $control_definition)
     {
  		return view('admin-pages.control-definitions.show')->with(compact('control_definition'));
     }
 
+    /**
+     * Update the specified ControlDefinition in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\ControlDefinition  $control_definition
+     * @return \Illuminate\Http\Response
+     */
     public function update(ControlDefinition $control_definition)
     {
     	$attributes = $this->validateControlDefinition();
@@ -56,6 +85,12 @@ class AdminControlDefinitionsController extends Controller
     	return redirect('/admin/control-definitions');
     }
 
+    /**
+     * Store a newly created ControlDefinition in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(ControlDefinition $control_definition)
     {
     	$attributes = $this->validateControlDefinition();
@@ -65,6 +100,12 @@ class AdminControlDefinitionsController extends Controller
  		return redirect('/admin/control-definitions');
     }
 
+    /**
+     * Remove the specified ControlDefinition from storage.
+     *
+     * @param  \App\ControlDefinition  $control_definition
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(ControlDefinition $control_definition)
     {
         Report::where('control_definition_id',$control_definition->id)->delete();
@@ -73,6 +114,11 @@ class AdminControlDefinitionsController extends Controller
         return redirect('/admin/control-definitions')->with('message','The control definition ' . $control_definition->name . ' deleted successfully');
     }
 
+    /**
+     * Validate the specified control definition.
+     *
+     * @return  \App\ControlDefinition  $control_definition
+     */
     protected function validateControlDefinition()
     {
     	return request()->validate([
