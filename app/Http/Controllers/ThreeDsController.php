@@ -15,6 +15,11 @@ class ThreeDsController extends Controller
         }
 	}
 
+    /**
+     * Display a listing of the ThreeDs.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         if (request()->wantsJson()) {
@@ -26,6 +31,11 @@ class ThreeDsController extends Controller
         }
     }
 
+     /**
+     * Show the form for creating a new ThreeD.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         if (request()->wantsJson())
@@ -34,6 +44,12 @@ class ThreeDsController extends Controller
  		return view('user-pages.three_ds.create');
     }
 
+    /**
+     * Show the form for editing the specified ThreeD.
+     *
+     * @param  \App\ThreeD  $ThreeD
+     * @return \Illuminate\Http\Response
+     */
     public function edit(ThreeD $three_d, $model)
     {
         if (request()->wantsJson())
@@ -47,6 +63,12 @@ class ThreeDsController extends Controller
  		return view('user-pages.three_ds.edit')->with(compact('three_d'));
     }
 
+     /**
+     * Display the specified ThreeD.
+     *
+     * @param  \App\ThreeD  $ThreeD
+     * @return \Illuminate\Http\Response
+     */
     public function show(ThreeD $three_d, $model)
     {
     	$three_d = ThreeD::findOrFail($model);
@@ -60,6 +82,13 @@ class ThreeDsController extends Controller
         }   
     }
 
+     /**
+     * Update the specified ThreeD in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\ThreeD  $ThreeD
+     * @return \Illuminate\Http\Response
+     */
     public function update(ThreeD $three_d, $model)
     {
     	$three_d = ThreeD::findOrFail($model);
@@ -78,6 +107,12 @@ class ThreeDsController extends Controller
         }
     }
 
+     /**
+     * Store a newly created ThreeD in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store()
     {
     	$attributes = $this->validateThreeD();
@@ -94,6 +129,12 @@ class ThreeDsController extends Controller
         }
     }
 
+      /**
+     * Remove the specified ThreeD from storage.
+     *
+     * @param  \App\ThreeD  $ThreeD
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(ThreeD $three_d, $model)
     {
         $three_d = ThreeD::findOrFail($model);
@@ -107,6 +148,11 @@ class ThreeDsController extends Controller
         }
     }
 
+      /**
+     * Validate the specified ThreeD.
+     *
+     * @return  \App\ThreeD  $ThreeD
+     */
     protected function validateThreeD()
     {
     	return request()->validate([
