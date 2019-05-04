@@ -14,6 +14,11 @@ class ReportsController extends Controller
         }
 	}
 
+    /**
+     * Display a listing of the Reports.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         if (request()->wantsJson()) {
@@ -25,6 +30,11 @@ class ReportsController extends Controller
         }
     }
 
+    /**
+     * Show the form for creating a new Report.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         if (request()->wantsJson())
@@ -35,6 +45,12 @@ class ReportsController extends Controller
         ]);
     }
 
+     /**
+     * Show the form for editing the specified Report.
+     *
+     * @param  \App\Report  $report
+     * @return \Illuminate\Http\Response
+     */
     public function edit(Report $report)
     {
         if (request()->wantsJson())
@@ -46,6 +62,12 @@ class ReportsController extends Controller
  		return view('user-pages.reports.edit')->with(compact('report','control_definitions'));
     }
 
+     /**
+     * Display the specified Report.
+     *
+     * @param  \App\Report  $report
+     * @return \Illuminate\Http\Response
+     */
     public function show(Report $report)
     {
     	$this->authorize('view',$report);
@@ -57,6 +79,13 @@ class ReportsController extends Controller
         }   
     }
 
+     /**
+     * Update the specified Report in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Report  $report
+     * @return \Illuminate\Http\Response
+     */
     public function update(Report $report)
     {
     	$this->authorize('update',$report);
@@ -72,6 +101,12 @@ class ReportsController extends Controller
         }
     }
 
+     /**
+     * Store a newly created Report in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Report $report)
     {
         $this->authorize('store', $report);
@@ -87,6 +122,12 @@ class ReportsController extends Controller
         }
     }
 
+    /**
+     * Remove the specified Report from storage.
+     *
+     * @param  \App\Report  $report
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(Report $report)
     {
         $report->control_definition->user_id != auth()->user()->id ? abort(403) : $report->delete();
@@ -98,6 +139,11 @@ class ReportsController extends Controller
         }
     }
 
+     /**
+     * Validate the specified report.
+     *
+     * @return  \App\Report  $report
+     */
     protected function validateReport()
     {
     	return request()->validate([
