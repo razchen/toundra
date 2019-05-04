@@ -8,6 +8,11 @@ class PagesController extends Controller
     public function __construct() {
     }
 
+    /**
+     * Route to go to Home page
+     *
+     * @return View
+     */
     public function home() {
         if (Auth::check()) {
             if (Auth::user()->type == 'admin')
@@ -19,26 +24,56 @@ class PagesController extends Controller
         return view('home');
     }
 
+    /**
+     * Route to go to Contact page
+     *
+     * @return View
+     */
     public function contact() {
         return view('pages.contact');
     }
 
+    /**
+     * Route to go to Dashboard page
+     *
+     * @return View
+     */
     public function dashboard() {
         return view('pages.dashboard');
     }
 
+    /**
+     * Route to go to About page
+     *
+     * @return View
+     */
     public function about() {
         return view('pages.about');
     }
 
+    /**
+     * Route to go to FAQ page
+     *
+     * @return View
+     */
     public function faq() {
         return view('pages.faq');
     }
 
+    /**
+     * Route to go to Terms page
+     *
+     * @return View
+     */
     public function terms() {
         return view('pages.terms');
     }
 
+    /**
+     * Route to go to Contact page
+     *
+     * @return View
+     */
     public function postContact(Request $request)
     {
         $error = false;
