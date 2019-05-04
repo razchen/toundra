@@ -13,6 +13,11 @@ class AdminUsersController extends Controller
 		$this->middleware('admin');
     }
     
+     /**
+     * Display a listing of the Users.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
  		return view('admin-pages.users.index',[
@@ -20,21 +25,45 @@ class AdminUsersController extends Controller
  		]);
     }
 
+    /**
+     * Display the specified User.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
     public function show(User $user)
     {
  		return view('admin-pages.users.show')->with(compact('user'));
     }
 
+    /**
+     * Show the form for creating a new User.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
  		return view('admin-pages.users.create');
     }
 
+    /**
+     * Show the form for editing the specified User.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
     public function edit(User $user)
     {
         return view('admin-pages.users.edit')->with(compact('user'));
     }
 
+    /**
+     * Update the specified User in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
     public function update(User $user)
     {
         $attributes = $this->validateUser($user->id);
@@ -48,6 +77,12 @@ class AdminUsersController extends Controller
     	return redirect('/admin/users');
     }
 
+    /**
+     * Remove the specified User from storage.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(User $user)
     {
         $user->delete();
@@ -55,7 +90,12 @@ class AdminUsersController extends Controller
         return redirect('/users')->with('message','The user ' . $user->name . ' deleted successfully');
     }
 
-
+    /**
+     * Store a newly created User in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store()
     {
         $attributes = $this->validateUser();
@@ -67,6 +107,11 @@ class AdminUsersController extends Controller
  		return redirect('/admin/users');
     }
 
+    /**
+     * Validate the specified user.
+     *
+     * @return  \App\User  $user
+     */
     protected function validateUser($user_id = false)
     {
         return request()->validate([
