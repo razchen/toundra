@@ -47,7 +47,7 @@ class ThreeDsController extends Controller
     /**
      * Show the form for editing the specified ThreeD.
      *
-     * @param  \App\ThreeD  $ThreeD
+     * @param  \App\ThreeD  $threeD
      * @return \Illuminate\Http\Response
      */
     public function edit(ThreeD $three_d, $model)
@@ -66,7 +66,7 @@ class ThreeDsController extends Controller
      /**
      * Display the specified ThreeD.
      *
-     * @param  \App\ThreeD  $ThreeD
+     * @param  \App\ThreeD  $threeD
      * @return \Illuminate\Http\Response
      */
     public function show(ThreeD $three_d, $model)
@@ -86,7 +86,7 @@ class ThreeDsController extends Controller
      * Update the specified ThreeD in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ThreeD  $ThreeD
+     * @param  \App\ThreeD  $threeD
      * @return \Illuminate\Http\Response
      */
     public function update(ThreeD $three_d, $model)
@@ -132,7 +132,7 @@ class ThreeDsController extends Controller
       /**
      * Remove the specified ThreeD from storage.
      *
-     * @param  \App\ThreeD  $ThreeD
+     * @param  \App\ThreeD  $threeD
      * @return \Illuminate\Http\Response
      */
     public function destroy(ThreeD $three_d, $model)
@@ -151,7 +151,7 @@ class ThreeDsController extends Controller
       /**
      * Validate the specified ThreeD.
      *
-     * @return  \App\ThreeD  $ThreeD
+     * @return  \App\ThreeD  $threeD
      */
     protected function validateThreeD()
     {
