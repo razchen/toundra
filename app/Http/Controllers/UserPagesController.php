@@ -8,6 +8,11 @@ class UserPagesController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * Route to go to Resend Confirmation page
+     *
+     * @return View
+     */
     public function resendConfirmation()
     {
         return view('user-pages.resend-confirmation'); 
