@@ -15,6 +15,11 @@ class AdminThreeDsController extends Controller
         $this->middleware('admin');
 	}
 
+    /**
+     * Display a listing of the ThreeDs.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
  		return view('admin-pages.three_ds.index',[
@@ -22,6 +27,11 @@ class AdminThreeDsController extends Controller
  		]);
     }
 
+    /**
+     * Show the form for creating a new ThreeD.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
  		return view('admin-pages.three_ds.create',[
@@ -29,6 +39,12 @@ class AdminThreeDsController extends Controller
         ]);
     }
 
+    /**
+     * Show the form for editing the specified ThreeD.
+     *
+     * @param  \App\ThreeD  $threeD
+     * @return \Illuminate\Http\Response
+     */
     public function edit(ThreeD $three_d, $model)
     {
     	$three_d = ThreeD::findOrFail($model);
@@ -37,6 +53,12 @@ class AdminThreeDsController extends Controller
  		return view('admin-pages.three_ds.edit')->with(compact('three_d','users'));
     }
 
+    /**
+     * Display the specified ThreeD.
+     *
+     * @param  \App\ThreeD  $threeD
+     * @return \Illuminate\Http\Response
+     */
     public function show(ThreeD $three_d, $model)
     {
     	$three_d = ThreeD::findOrFail($model);
@@ -45,6 +67,13 @@ class AdminThreeDsController extends Controller
  		return view('admin-pages.three_ds.show')->with(compact('three_d'));
     }
 
+    /**
+     * Update the specified ThreeD in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\ThreeD  $threeD
+     * @return \Illuminate\Http\Response
+     */
     public function update(ThreeD $three_d, $model)
     {
     	$three_d = ThreeD::findOrFail($model);
@@ -58,6 +87,12 @@ class AdminThreeDsController extends Controller
     	return redirect('/admin/models');
     }
 
+    /**
+     * Store a newly created ThreeD in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store()
     {
     	$attributes = $this->validateThreeD();
@@ -69,6 +104,12 @@ class AdminThreeDsController extends Controller
  		return redirect('/admin/models');
     }
 
+    /**
+     * Remove the specified ThreeD from storage.
+     *
+     * @param  \App\ThreeD  $threeD
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(ThreeD $three_d, $model)
     {
         $three_d = ThreeD::findOrFail($model);
@@ -78,6 +119,11 @@ class AdminThreeDsController extends Controller
         return redirect('/admin/models')->with('message','The model ' . $three_d->name . ' deleted successfully');
     }
 
+    /**
+     * Validate the specified ThreeD.
+     *
+     * @return  \App\ThreeD  $threeD
+     */
     protected function validateThreeD()
     {
     	return request()->validate([
