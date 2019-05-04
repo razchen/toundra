@@ -2,102 +2,81 @@
 
 Toundra is a platform that allows managing 3d models.
 
-## Installation
+## 1 - Enviroment
 
-1. Pull from github
+### Make sure that you have installed the next tools:
+* [Git](https://git-scm.com/downloads)
+* [npm](https://www.npmjs.com/get-npm)
+* [PHP](https://www.php.net/downloads.php)
+* [Composer](https://getcomposer.org/download/)
+* [Laravel](https://laravel.com/docs/5.8)
+* [MySQL](https://www.mysql.com/downloads/)
+
+>We recomend to you to use Vagrant + Homestead. You can check the official documentation [here](https://laravel.com/docs/5.8/homestead).
+## 2 - Database
+
+### Rename the `.env.example` to `.env` file which should include all the environment variables for your project: 
+
+The most important part is the database configuration:
 
 ```bash
-git pull origin master
+DB_CONNECTION=mysql
+DB_HOST=localhost
+DB_PORT=3306
+DB_DATABASE=toundra
+DB_USERNAME=YOUR_USER_NAME
+DB_PASSWORD=YOUR_PASSWORD
 ```
 
-2. Install composer
+### Login to MySQL and create a database called `toundra`
+
+```mysql
+CREATE DATABASE toundra;
+```
+>You may also use phpMyAdmin or MySQL Workbech.
+
+### Import the database
 
 ```bash
-https://getcomposer.org/download/
+mysql toundra < import.sql
+```
+>Again, if you don't want to use CLI, you can use phpMyAdmin or MySQL Workbech to do the import.
+## 3- Installation
+
+### Clone the repository from Github
+
+```bash
+git clone https://github.com/razchen/toundra.git
+```
+and
+
+```bash
+cd toundra
 ```
 
-3. Run composer dependencies 
+### Run Composer dependencies 
 
 ```bash
 composer install
 ```
 
-4. Install NPM
-
-```bash
-https://tecadmin.net/install-latest-nodejs-npm-on-ubuntu/
-```
-
-5. Run NPM dependencies
+### Run NPM dependencies
 
 ```bash
 npm install
 ```
 
-6. Upload a .env file which should include all the environment variable for the project: 
-
-```bash
-APP_NAME=Toundra
-APP_ENV=local
-APP_KEY=base64:S4CWmzWMVzrq02QybexufvF1AWLpN1tZ3MQW6/1MQ+M=
-APP_DEBUG=true
-APP_URL=http://www.toundra.io
-
-LOG_CHANNEL=stack
-
-DB_CONNECTION=mysql
-DB_HOST=localhost
-DB_PORT=3306
-DB_DATABASE=toundra
-DB_USERNAME=homestead
-DB_PASSWORD=secret
-
-BROADCAST_DRIVER=log
-CACHE_DRIVER=file
-QUEUE_CONNECTION=sync
-SESSION_DRIVER=file
-SESSION_LIFETIME=120
-
-REDIS_HOST=127.0.0.1
-REDIS_PASSWORD=null
-REDIS_PORT=6379
-
-MAIL_DRIVER=smtp
-MAIL_HOST=smtp.mailtrap.io
-MAIL_PORT=2525
-MAIL_USERNAME=c7f6d24a7395f9
-MAIL_PASSWORD=19aea742d977ae
-MAIL_ENCRYPTION=null
-
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
-AWS_DEFAULT_REGION=us-east-1
-AWS_BUCKET=
-
-PUSHER_APP_ID=
-PUSHER_APP_KEY=
-PUSHER_APP_SECRET=
-PUSHER_APP_CLUSTER=mt1
-
-MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
-MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
-
-```
-
-7. Login to MySQL and create a database
-
-```mysql
-CREATE DATABASE toundra;
-```
-
-8. Import the DB
-
-```bash
-mysql toundra < toundra.sql
-```
-
-9. Run Webpack
+### Run Webpack
 
 ```bash
 npm run prod
 ```
+
+### Run the server
+If you are not using Vagrant + Homestad, run the server:
+
+```bash
+php artisan serve
+```
+
+If you are using Vagrant + Homestad, go to your configurated domain.
