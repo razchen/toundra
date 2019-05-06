@@ -68,7 +68,6 @@ class AdminScenesController extends Controller
     /**
      * Update the specified Scene in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Scene  $scene
      * @return \Illuminate\Http\Response
      */
