@@ -66,7 +66,6 @@ class AdminCamerasController extends Controller
     /**
      * Update the specified Camera in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Camera  $camera
      * @return \Illuminate\Http\Response
      */
@@ -82,7 +81,6 @@ class AdminCamerasController extends Controller
     /**
      * Store a newly created Camera in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store()
