@@ -43,7 +43,7 @@ class AdminCamerasController extends Controller
     /**
      * Show the form for editing the specified Camera.
      *
-     * @param  \App\Camera  $scene
+     * @param  \App\Camera  $camera
      * @return \Illuminate\Http\Response
      */
     public function edit(Camera $camera)
@@ -55,7 +55,7 @@ class AdminCamerasController extends Controller
     /**
      * Display the specified Camera.
      *
-     * @param  \App\Camera  $scene
+     * @param  \App\Camera  $camera
      * @return \Illuminate\Http\Response
      */
     public function show(Camera $camera)
@@ -67,7 +67,7 @@ class AdminCamerasController extends Controller
      * Update the specified Camera in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Camera  $scene
+     * @param  \App\Camera  $camera
      * @return \Illuminate\Http\Response
      */
     public function update(Camera $camera)
@@ -97,7 +97,7 @@ class AdminCamerasController extends Controller
     /**
      * Remove the specified Camera from storage.
      *
-     * @param  \App\Camera  $scene
+     * @param  \App\Camera  $camera
      * @return \Illuminate\Http\Response
      */
     public function destroy(Camera $camera)
