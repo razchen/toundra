@@ -116,7 +116,7 @@ class AdminControlDefinitionsController extends Controller
     /**
      * Validate the specified control definition.
      *
-     * @return  \App\ControlDefinition  $control_definition
+     * @return  \Illuminate\Http\Request  $request
      */
     protected function validateControlDefinition()
     {

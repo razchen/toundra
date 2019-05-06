@@ -108,7 +108,7 @@ class AdminUsersController extends Controller
     /**
      * Validate the specified user.
      *
-     * @return  \App\User  $user
+     * @return \Illuminate\Http\Request  $request
      */
     protected function validateUser($user_id = false)
     {

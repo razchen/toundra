@@ -104,7 +104,7 @@ class ProtocolsController extends Controller
     /**
      * Validate the specified protocol.
      *
-     * @return  \App\Protocol  $protocol
+     * @return  \Illuminate\Http\Request  $request
      */
     protected function validateProtocol()
     {

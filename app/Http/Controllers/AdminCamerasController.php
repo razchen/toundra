@@ -109,7 +109,7 @@ class AdminCamerasController extends Controller
     /**
      * Validate the specified Camera.
      *
-     * @return  \App\Camera  $camera
+     * @return  \Illuminate\Http\Request  $request
      */
     protected function validateCamera()
     {

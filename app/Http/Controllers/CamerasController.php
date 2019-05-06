@@ -141,7 +141,7 @@ class CamerasController extends Controller
      /**
      * Validate the specified camera.
      *
-     * @return  \App\Camera  $camera
+     * @return  \Illuminate\Http\Request  $request
      */
     protected function validateCamera()
     {

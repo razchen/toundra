@@ -151,7 +151,7 @@ class ThreeDsController extends Controller
       /**
      * Validate the specified ThreeD.
      *
-     * @return  \App\ThreeD  $threeD
+     * @return  \Illuminate\Http\Request  $request
      */
     protected function validateThreeD()
     {

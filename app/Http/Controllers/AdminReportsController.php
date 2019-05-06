@@ -110,7 +110,7 @@ class AdminReportsController extends Controller
     /**
      * Validate the specified report.
      *
-     * @return  \App\Report  $report
+     * @return  \Illuminate\Http\Request  $request
      */
     protected function validateReport()
     {

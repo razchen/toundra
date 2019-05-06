@@ -143,7 +143,7 @@ class ScenesController extends Controller
      /**
      * Validate the specified scene.
      *
-     * @return  \App\Scene  $scene
+     * @return \Illuminate\Http\Request  $request
      */
     protected function validateScene()
     {
