@@ -13,6 +13,11 @@ class ProtocolsController extends Controller
         $this->middleware('admin');
 	}
 
+     /**
+     * Display a listing of the Protocols.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
  		return view('protocols.index',[
@@ -20,21 +25,44 @@ class ProtocolsController extends Controller
  		]);
     }
 
+    /**
+     * Show the form for creating a new Protocol.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
  		return view('protocols.create');
     }
 
+     /**
+     * Show the form for editing the specified Protocol.
+     *
+     * @param  \App\Protocol  $protocol
+     * @return \Illuminate\Http\Response
+     */
     public function edit(Protocol $protocol)
     {
  		return view('protocols.edit')->with(compact('protocol'));
     }
 
+     /**
+     * Display the specified Protocol.
+     *
+     * @param  \App\Protocol  $protocol
+     * @return \Illuminate\Http\Response
+     */
     public function show(Protocol $protocol)
     {
  		return view('protocols.show')->with(compact('protocol'));
     }
 
+    /**
+     * Update the specified Protocol in storage.
+     *
+     * @param  \App\Protocol  $protocol
+     * @return \Illuminate\Http\Response
+     */
     public function update(Protocol $protocol)
     {
     	$attributes = $this->validateProtocol();
@@ -44,6 +72,11 @@ class ProtocolsController extends Controller
     	return redirect('/protocols');
     }
 
+    /**
+     * Store a newly created Protocol in storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function store()
     {
     	$attributes = $this->validateProtocol();
@@ -53,6 +86,12 @@ class ProtocolsController extends Controller
  		return redirect('/protocols');
     }
 
+    /**
+     * Remove the specified Protocol from storage.
+     *
+     * @param  \App\Protocol  $protocol
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(Protocol $protocol)
     {
         $protocol->delete();
@@ -60,6 +99,11 @@ class ProtocolsController extends Controller
         return redirect('/protocols')->with('message','The protocol ' . $protocol->name . ' deleted successfully');
     }
 
+    /**
+     * Validate the specified protocol.
+     *
+     * @return  \Illuminate\Http\Request  $request
+     */
     protected function validateProtocol()
     {
     	return request()->validate([

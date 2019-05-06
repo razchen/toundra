@@ -15,6 +15,11 @@ class CamerasController extends Controller
         }
 	}
 
+    /**
+     * Display a listing of the Cameras.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         if (request()->wantsJson()) {
@@ -26,6 +31,11 @@ class CamerasController extends Controller
         }
     }
 
+    /**
+     * Show the form for creating a new Camera.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         if (request()->wantsJson())
@@ -34,6 +44,12 @@ class CamerasController extends Controller
  		return view('user-pages.cameras.create');
     }
 
+    /**
+     * Show the form for editing the specified Camera.
+     *
+     * @param  \App\Camera  $camera
+     * @return \Illuminate\Http\Response
+     */
     public function edit(Camera $camera)
     {
         if (request()->wantsJson())
@@ -44,6 +60,12 @@ class CamerasController extends Controller
  		return view('user-pages.cameras.edit')->with(compact('camera'));
     }
 
+    /**
+     * Display the specified Camera.
+     *
+     * @param  \App\Camera  $camera
+     * @return \Illuminate\Http\Response
+     */
     public function show(Camera $camera)
     {
     	$this->authorize('view',$camera);
@@ -55,6 +77,12 @@ class CamerasController extends Controller
         }
     }
 
+    /**
+     * Update the specified Camera in storage.
+     *
+     * @param  \App\Camera  $camera
+     * @return \Illuminate\Http\Response
+     */
     public function update(Camera $camera)
     {
     	$this->authorize('update',$camera);
@@ -69,6 +97,11 @@ class CamerasController extends Controller
         }
     }
 
+    /**
+     * Store a newly created Camera in storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function store()
     {
     	$attributes = $this->validateCamera();
@@ -83,6 +116,12 @@ class CamerasController extends Controller
         }
     }
 
+    /**
+     * Remove the specified Camera from storage.
+     *
+     * @param  \App\Camera  $camera
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(Camera $camera)
     {
         if ($camera->user_id != auth()->user()->id) {
@@ -99,6 +138,11 @@ class CamerasController extends Controller
         }
     }
 
+     /**
+     * Validate the specified camera.
+     *
+     * @return  \Illuminate\Http\Request  $request
+     */
     protected function validateCamera()
     {
     	return request()->validate([

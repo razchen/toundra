@@ -16,6 +16,11 @@ class AdminCamerasController extends Controller
         $this->middleware('admin');
 	}
 
+    /**
+     * Display a listing of the Cameras.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
  		return view('admin-pages.cameras.index',[
@@ -23,6 +28,11 @@ class AdminCamerasController extends Controller
  		]);
     }
 
+    /**
+     * Show the form for creating a new Camera.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
  		return view('admin-pages.cameras.create',[
@@ -30,17 +40,35 @@ class AdminCamerasController extends Controller
         ]);
     }
 
+    /**
+     * Show the form for editing the specified Camera.
+     *
+     * @param  \App\Camera  $camera
+     * @return \Illuminate\Http\Response
+     */
     public function edit(Camera $camera)
     {
         $users = User::orderBy('name','asc')->get();
  		return view('admin-pages.cameras.edit')->with(compact('camera','users'));
     }
 
+    /**
+     * Display the specified Camera.
+     *
+     * @param  \App\Camera  $camera
+     * @return \Illuminate\Http\Response
+     */
     public function show(Camera $camera)
     {
  		return view('admin-pages.cameras.show')->with(compact('camera'));
     }
 
+    /**
+     * Update the specified Camera in storage.
+     *
+     * @param  \App\Camera  $camera
+     * @return \Illuminate\Http\Response
+     */
     public function update(Camera $camera)
     {
     	$attributes = $this->validateCamera();
@@ -50,6 +78,11 @@ class AdminCamerasController extends Controller
     	return redirect('/admin/cameras');
     }
 
+    /**
+     * Store a newly created Camera in storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function store()
     {
     	$attributes = $this->validateCamera();
@@ -59,6 +92,12 @@ class AdminCamerasController extends Controller
  		return redirect('/admin/cameras');
     }
 
+    /**
+     * Remove the specified Camera from storage.
+     *
+     * @param  \App\Camera  $camera
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(Camera $camera)
     {
         Scene::where('camera_id',$camera->id)->delete();
@@ -67,6 +106,11 @@ class AdminCamerasController extends Controller
         return redirect('/admin/cameras')->with('message','The camera ' . $camera->name . ' deleted successfully');
     }
 
+    /**
+     * Validate the specified Camera.
+     *
+     * @return  \Illuminate\Http\Request  $request
+     */
     protected function validateCamera()
     {
     	return request()->validate([

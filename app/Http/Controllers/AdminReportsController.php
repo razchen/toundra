@@ -15,6 +15,11 @@ class AdminReportsController extends Controller
         $this->middleware('admin');
 	}
 
+    /**
+     * Display a listing of the Reports.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
  		return view('admin-pages.reports.index',[
@@ -22,6 +27,11 @@ class AdminReportsController extends Controller
  		]);
     }
 
+    /**
+     * Show the form for creating a new Report.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
  		return view('admin-pages.reports.create',[
@@ -29,6 +39,12 @@ class AdminReportsController extends Controller
         ]);
     }
 
+    /**
+     * Show the form for editing the specified Report.
+     *
+     * @param  \App\Report  $report
+     * @return \Illuminate\Http\Response
+     */
     public function edit(Report $report)
     {
         $control_definitions = ControlDefinition::orderBy('name','asc')->get();
@@ -36,11 +52,23 @@ class AdminReportsController extends Controller
  		return view('admin-pages.reports.edit')->with(compact('report','control_definitions'));
     }
 
+    /**
+     * Display the specified Report.
+     *
+     * @param  \App\Report  $report
+     * @return \Illuminate\Http\Response
+     */
     public function show(Report $report)
     {
  		return view('admin-pages.reports.show')->with(compact('report'));
     }
 
+    /**
+     * Update the specified Report in storage.
+     *
+     * @param  \App\Report  $report
+     * @return \Illuminate\Http\Response
+     */
     public function update(Report $report)
     {
         $attributes = $this->validateReport();
@@ -50,6 +78,12 @@ class AdminReportsController extends Controller
     	return redirect('/admin/reports');
     }
 
+    /**
+     * Store a newly created Report in storage.
+     * 
+     *  @param  \App\Report  $report
+     * @return \Illuminate\Http\Response
+     */
     public function store(Report $report)
     {
     	$attributes = $this->validateReport();
@@ -59,6 +93,12 @@ class AdminReportsController extends Controller
  		return redirect('/admin/reports');
     }
 
+    /**
+     * Remove the specified Report from storage.
+     *
+     * @param  \App\Report  $report
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(Report $report)
     {
         $report->delete();
@@ -66,6 +106,11 @@ class AdminReportsController extends Controller
         return redirect('/admin/reports')->with('message','The report ' . $report->instance_id . ' deleted successfully');
     }
 
+    /**
+     * Validate the specified report.
+     *
+     * @return  \Illuminate\Http\Request  $request
+     */
     protected function validateReport()
     {
     	return request()->validate([

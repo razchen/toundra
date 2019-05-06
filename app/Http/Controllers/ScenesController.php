@@ -14,6 +14,11 @@ class ScenesController extends Controller
         }
 	}
 
+    /**
+     * Display a listing of the Scenes.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         if (request()->wantsJson()) {
@@ -25,6 +30,11 @@ class ScenesController extends Controller
         }
     }
 
+    /**
+     * Show the form for creating a new Scene.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         if (request()->wantsJson())
@@ -35,6 +45,12 @@ class ScenesController extends Controller
         ]);
     }
 
+      /**
+     * Show the form for editing the specified Scene.
+     *
+     * @param  \App\Scene  $scene
+     * @return \Illuminate\Http\Response
+     */
     public function edit(Scene $scene)
     {
         if (request()->wantsJson())
@@ -46,6 +62,12 @@ class ScenesController extends Controller
  		return view('user-pages.scenes.edit')->with(compact('scene','cameras'));
     }
 
+    /**
+     * Display the specified Scene.
+     *
+     * @param  \App\Scene  $scene
+     * @return \Illuminate\Http\Response
+     */
     public function show(Scene $scene)
     {
     	$this->authorize('view',$scene);
@@ -57,6 +79,13 @@ class ScenesController extends Controller
         }	
     }
 
+    /**
+     * Update the specified Scene in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Scene  $scene
+     * @return \Illuminate\Http\Response
+     */
     public function update(Scene $scene)
     {
     	$this->authorize('update',$scene);
@@ -72,6 +101,12 @@ class ScenesController extends Controller
         }
     }
 
+    /**
+     * Store a newly created Scene in storage.
+     *
+     * @param  \App\Scene  $scene
+     * @return \Illuminate\Http\Response
+     */
     public function store(Scene $scene)
     {
         $this->authorize('store', $scene);
@@ -88,6 +123,12 @@ class ScenesController extends Controller
         }
     }
 
+     /**
+     * Remove the specified Scene from storage.
+     *
+     * @param  \App\Scene  $scene
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(Scene $scene)
     {
         $scene->user_id != auth()->user()->id ? abort(403) : $scene->delete();
@@ -99,6 +140,11 @@ class ScenesController extends Controller
         }
     }
 
+     /**
+     * Validate the specified scene.
+     *
+     * @return \Illuminate\Http\Request  $request
+     */
     protected function validateScene()
     {
     	return request()->validate([

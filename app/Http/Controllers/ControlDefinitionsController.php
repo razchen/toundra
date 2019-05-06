@@ -17,6 +17,11 @@ class ControlDefinitionsController extends Controller
         }
 	}
 
+    /**
+     * Display a listing of the ControlDefinitions.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         if (request()->wantsJson()) {
@@ -28,6 +33,11 @@ class ControlDefinitionsController extends Controller
         }
     }
 
+    /**
+     * Show the form for creating a new ControlDefinition.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         if (request()->wantsJson())
@@ -39,6 +49,12 @@ class ControlDefinitionsController extends Controller
         ]);
     }
 
+    /**
+     * Show the form for editing the specified ControlDefinition.
+     *
+     * @param  \App\ControlDefinition  $control_definition
+     * @return \Illuminate\Http\Response
+     */
     public function edit(ControlDefinition $control_definition)
     {
         if (request()->wantsJson())
@@ -53,6 +69,12 @@ class ControlDefinitionsController extends Controller
         ]);
     }
 
+    /**
+     * Display the specified ControlDefinition.
+     *
+     * @param  \App\ControlDefinition  $control_definition
+     * @return \Illuminate\Http\Response
+     */
     public function show(ControlDefinition $control_definition)
     {
     	$this->authorize('view',$control_definition);
@@ -64,6 +86,13 @@ class ControlDefinitionsController extends Controller
         }   
     }
 
+    /**
+     * Update the specified ControlDefinition in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\ControlDefinition  $control_definition
+     * @return \Illuminate\Http\Response
+     */
     public function update(ControlDefinition $control_definition)
     {
     	$this->authorize('update',$control_definition);
@@ -79,6 +108,12 @@ class ControlDefinitionsController extends Controller
         }
     }
 
+    /**
+     * Store a newly created ControlDefinition in storage.
+     *
+     * @param  \App\ControlDefinition  $control_definition
+     * @return \Illuminate\Http\Response
+     */
     public function store(ControlDefinition $control_definition)
     {
         $this->authorize('store',$control_definition);
@@ -95,6 +130,12 @@ class ControlDefinitionsController extends Controller
         }
     }
 
+    /**
+     * Remove the specified ControlDefinition from storage.
+     *
+     * @param  \App\ControlDefinition  $control_definition
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(ControlDefinition $control_definition)
     {
         if ($control_definition->user_id != auth()->user()->id) {
@@ -111,6 +152,11 @@ class ControlDefinitionsController extends Controller
         }
     }
 
+    /**
+     * Validate the specified control definition.
+     *
+     * @return  \Illuminate\Http\Request  $request
+     */
     protected function validateControlDefinition()
     {
     	return request()->validate([

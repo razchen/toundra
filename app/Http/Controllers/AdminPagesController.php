@@ -11,6 +11,11 @@ class AdminPagesController extends Controller
         $this->middleware('admin');
     }
 
+    /**
+     * Route to go to  Admin Dashboard page
+     *
+     * @return View
+     */
     public function dashboard()
     {
         return view('admin-pages.dashboard')->with(compact('admin_notifications'));
