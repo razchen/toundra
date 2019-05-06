@@ -72,7 +72,6 @@ class AdminControlDefinitionsController extends Controller
     /**
      * Update the specified ControlDefinition in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\ControlDefinition  $control_definition
      * @return \Illuminate\Http\Response
      */
@@ -88,7 +87,7 @@ class AdminControlDefinitionsController extends Controller
     /**
      * Store a newly created ControlDefinition in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\ControlDefinition  $control_definition
      * @return \Illuminate\Http\Response
      */
     public function store(ControlDefinition $control_definition)
