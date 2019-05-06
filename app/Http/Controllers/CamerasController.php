@@ -80,7 +80,6 @@ class CamerasController extends Controller
     /**
      * Update the specified Camera in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Camera  $scene
      * @return \Illuminate\Http\Response
      */
@@ -101,7 +100,6 @@ class CamerasController extends Controller
     /**
      * Store a newly created Camera in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store()
@@ -140,6 +138,11 @@ class CamerasController extends Controller
         }
     }
 
+     /**
+     * Validate the specified camera.
+     *
+     * @return  \App\Camera  $camera
+     */
     protected function validateCamera()
     {
     	return request()->validate([
