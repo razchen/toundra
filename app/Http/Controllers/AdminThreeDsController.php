@@ -57,6 +57,7 @@ class AdminThreeDsController extends Controller
      * Display the specified ThreeD.
      *
      * @param  \App\ThreeD  $threeD
+     * @param  $model
      * @return \Illuminate\Http\Response
      */
     public function show(ThreeD $three_d, $model)
@@ -70,8 +71,8 @@ class AdminThreeDsController extends Controller
     /**
      * Update the specified ThreeD in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\ThreeD  $threeD
+     * @param  $model
      * @return \Illuminate\Http\Response
      */
     public function update(ThreeD $three_d, $model)
@@ -90,7 +91,6 @@ class AdminThreeDsController extends Controller
     /**
      * Store a newly created ThreeD in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store()
@@ -108,6 +108,7 @@ class AdminThreeDsController extends Controller
      * Remove the specified ThreeD from storage.
      *
      * @param  \App\ThreeD  $threeD
+     * @param  $model
      * @return \Illuminate\Http\Response
      */
     public function destroy(ThreeD $three_d, $model)
