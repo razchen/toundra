@@ -66,7 +66,6 @@ class AdminReportsController extends Controller
     /**
      * Update the specified Report in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Report  $report
      * @return \Illuminate\Http\Response
      */
@@ -82,7 +81,6 @@ class AdminReportsController extends Controller
     /**
      * Store a newly created Report in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Report $report)

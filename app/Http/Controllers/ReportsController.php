@@ -82,7 +82,6 @@ class ReportsController extends Controller
      /**
      * Update the specified Report in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Report  $report
      * @return \Illuminate\Http\Response
      */

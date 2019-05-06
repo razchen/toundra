@@ -83,7 +83,7 @@ class AdminScenesController extends Controller
     /**
      * Store a newly created Scene in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Scene  $scene
      * @return \Illuminate\Http\Response
      */
     public function store(Scene $scene)

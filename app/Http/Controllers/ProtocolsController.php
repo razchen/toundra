@@ -60,7 +60,6 @@ class ProtocolsController extends Controller
     /**
      * Update the specified Protocol in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Protocol  $protocol
      * @return \Illuminate\Http\Response
      */
@@ -76,7 +75,6 @@ class ProtocolsController extends Controller
     /**
      * Store a newly created Protocol in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store()
