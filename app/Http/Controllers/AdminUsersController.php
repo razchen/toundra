@@ -60,7 +60,6 @@ class AdminUsersController extends Controller
     /**
      * Update the specified User in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
@@ -93,7 +92,6 @@ class AdminUsersController extends Controller
     /**
      * Store a newly created User in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store()
