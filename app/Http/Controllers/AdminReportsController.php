@@ -80,7 +80,8 @@ class AdminReportsController extends Controller
 
     /**
      * Store a newly created Report in storage.
-     *
+     * 
+     *  @param  \App\Report  $report
      * @return \Illuminate\Http\Response
      */
     public function store(Report $report)
