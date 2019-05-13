@@ -15,10 +15,7 @@ class PagesController extends Controller
      */
     public function home() {
         if (Auth::check()) {
-            if (Auth::user()->type == 'admin')
-                return redirect ('/admin/cameras');
-            else
-                return redirect('/cameras');
+            return redirect('/cameras');
         }
 
         return view('home');
