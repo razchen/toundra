@@ -22,7 +22,7 @@ class ControlDefinitionPolicy
      */
     public function view(User $user, ControlDefinition $control_definition)
     {
-        return $control_definition->user_id == $user->id;
+        return $control_definition->user_id == $user->id || $user->type == 'admin';
     }
 
     /**
@@ -34,7 +34,7 @@ class ControlDefinitionPolicy
      */
     public function store(User $user, ControlDefinition $control_definition)
     {
-        return $control_definition->ThreeDOwnedByUser(request()->three_d_id);
+        return $control_definition->ThreeDOwnedByUser(request()->three_d_id) || $user->type == 'admin';
     }
 
     /**
@@ -46,6 +46,6 @@ class ControlDefinitionPolicy
      */
     public function update(User $user, ControlDefinition $control_definition)
     {
-        return $control_definition->user_id == $user->id && $control_definition->ThreeDOwnedByUser(request()->three_d_id);
+        return ($control_definition->user_id == $user->id && $control_definition->ThreeDOwnedByUser(request()->three_d_id)) || $user->type == 'admin';
     }
 }

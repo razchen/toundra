@@ -21,7 +21,7 @@ class CameraPolicy
      */
     public function view(User $user, Camera $camera)
     {
-        return $camera->user_id == $user->id;
+        return $camera->user_id == $user->id || $user->type == 'admin';
     }
 
     /**
@@ -33,6 +33,6 @@ class CameraPolicy
      */
     public function update(User $user, Camera $camera)
     {
-        return $camera->user_id == $user->id;
+        return $camera->user_id == $user->id || $user->type == 'admin';
     }
 }

@@ -10,7 +10,7 @@ class ProtocolsController extends Controller
     public function __construct()
 	{
 		$this->middleware('auth');
-        $this->middleware('admin');
+        $this->middleware('admin', ['except' => ['index']]);
 	}
 
      /**
@@ -20,9 +20,13 @@ class ProtocolsController extends Controller
      */
     public function index()
     {
- 		return view('protocols.index',[
- 			'protocols' => Protocol::orderBy('updated_at','desc')->get()
- 		]);
+        if (request()->wantsJson()) {
+            return response()->JSON(Protocol::orderBy('updated_at','desc')->get());
+        } else {
+            return view('user-pages.protocols.reactive',[
+                'protocols' => Protocol::orderBy('updated_at','desc')->get()
+            ]);
+        }
     }
 
     /**
@@ -32,7 +36,10 @@ class ProtocolsController extends Controller
      */
     public function create()
     {
- 		return view('protocols.create');
+        if (request()->wantsJson())
+            return null;
+
+ 		return view('user-pages.protocols.reactive');
     }
 
      /**
@@ -43,7 +50,10 @@ class ProtocolsController extends Controller
      */
     public function edit(Protocol $protocol)
     {
- 		return view('protocols.edit')->with(compact('protocol'));
+        if (request()->wantsJson())
+            return null;
+
+ 		return view('user-pages.protocols.reactive')->with(compact('protocol'));
     }
 
      /**
@@ -54,7 +64,11 @@ class ProtocolsController extends Controller
      */
     public function show(Protocol $protocol)
     {
- 		return view('protocols.show')->with(compact('protocol'));
+        if (request()->wantsJson()) {
+            return response()->JSON($protocol);
+        } else {
+            return view('user-pages.protocols.reactive')->with(compact('protocol'));
+        }   
     }
 
     /**
@@ -69,7 +83,11 @@ class ProtocolsController extends Controller
 
     	$protocol->update($attributes);
 
-    	return redirect('/protocols');
+        if (request()->wantsJson()) {
+            return response()->JSON($protocol);
+        } else {
+            return redirect('/protocols');
+        }
     }
 
     /**
@@ -81,9 +99,13 @@ class ProtocolsController extends Controller
     {
     	$attributes = $this->validateProtocol();
 
- 		Protocol::create($attributes);
+ 		$protocol = Protocol::create($attributes);
 
- 		return redirect('/protocols');
+        if (request()->wantsJson()) {
+            return response()->JSON($protocol);
+        } else {
+            return redirect('/protocols');
+        }
     }
 
     /**
@@ -96,7 +118,11 @@ class ProtocolsController extends Controller
     {
         $protocol->delete();
 
-        return redirect('/protocols')->with('message','The protocol ' . $protocol->name . ' deleted successfully');
+        if (request()->wantsJson()) {
+            return response()->JSON(['status' => 'success']);
+        } else {
+            return redirect('/protocols')->with('message','The protocol ' . $protocol->name . ' deleted successfully');
+        }
     }
 
     /**

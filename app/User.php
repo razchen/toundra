@@ -28,7 +28,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token'
     ];
 
     /**
@@ -40,57 +40,84 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected function sortAllowed()
+    public function adminCameras()
     {
-        if (!request()->get('sort') && !request()->get('sort_dir')) {
-            request()->merge(['sort' => 'updated_at','sort_dir' => 'desc']);
-            return true;
-        }
+        $filters = filtersAllowed(['name','intrinsic']);
+        sortAllowed();
 
-        return in_array(request()->get('sort'),['updated_at','created_at']) && in_array(request()->get('sort_dir'),['asc','desc']) ? true : abort(403);
-    }
-
-    protected function filtersAllowed($filters_allowed)
-    {
-        if (!request()->get('filters')) {
-            return [];
-        } elseif(!request()->get('filter_value')) {
-            return [];
-        } else {
-            if (!in_array(request()->get('filters'),$filters_allowed)) {
-                abort(403);
-            } else {
-                $filters = request()->get('filters');
-                $filter_value = request()->get('filter_value');
-                return [$filters => $filter_value];
-            }
-        }
-        
-        return (count(array_intersect($filters_allowed, array_keys(request()->filters))) == count(request()->get('filters')));
+        return Camera::where($filters)
+            ->orderBy(request()->get('sort'),request()->get('sort_dir'))
+            ->get();
     }
 
     public function cameras()
     {   
-        $filters = $this->filtersAllowed(['name','intrinsic']);
-        $this->sortAllowed();
+        $filters = filtersAllowed(['name','intrinsic']);
+        sortAllowed();
 
         return $this->hasMany(Camera::class)
             ->where($filters)
             ->orderBy(request()->get('sort'),request()->get('sort_dir'));
     }
 
+    public function adminThreeDs()
+    {
+        $filters = filtersAllowed(['name']);
+        sortAllowed();
+
+        return ThreeD::where($filters)
+            ->where($filters)
+            ->orderBy(request()->get('sort'),request()->get('sort_dir'))
+            ->get();
+    }
+
     public function three_ds()
     {
-        return $this->hasMany(ThreeD::class)->orderBy('created_at','desc');
+        $filters = filtersAllowed(['name']);
+        sortAllowed();
+
+        return $this->hasMany(ThreeD::class)
+            ->where($filters)
+            ->orderBy(request()->get('sort'),request()->get('sort_dir'));
+    }
+
+    public function adminScenes()
+    {
+        $filters = filtersAllowed(['name','intrinsic']);
+        sortAllowed();
+
+        return Scene::where($filters)
+            ->orderBy(request()->get('sort'),request()->get('sort_dir'))
+            ->get();
     }
 
     public function scenes()
     {
-        return $this->hasMany(Scene::class)->orderBy('created_at','desc');
+        $filters = filtersAllowed(['name']);
+        sortAllowed();
+
+        return $this->hasMany(Scene::class)
+            ->where($filters)
+            ->orderBy(request()->get('sort'),request()->get('sort_dir'));
+    }
+
+    public function adminControlDefinitions()
+    {
+        $filters = filtersAllowed(['name','intrinsic']);
+        sortAllowed();
+
+        return ControlDefinition::where($filters)
+            ->orderBy(request()->get('sort'),request()->get('sort_dir'))
+            ->get();
     }
 
     public function control_definitions()
     {
-        return $this->hasMany(ControlDefinition::class)->orderBy('created_at','desc');
+        $filters = filtersAllowed(['name']);
+        sortAllowed();
+
+        return $this->hasMany(ControlDefinition::class)
+            ->where($filters)
+            ->orderBy(request()->get('sort'),request()->get('sort_dir'));
     }
 }

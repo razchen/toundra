@@ -22,11 +22,12 @@ class CamerasController extends Controller
      */
     public function index()
     {
+        $response = auth()->user()->type == 'admin' ? auth()->user()->adminCameras() : auth()->user()->cameras;
         if (request()->wantsJson()) {
-            return response()->JSON(auth()->user()->cameras);
+            return response()->JSON($response);
         } else {
-            return view('user-pages.cameras.index',[
-                'cameras' => auth()->user()->cameras
+            return view('user-pages.cameras.reactive',[
+                'cameras' => $response
             ]);    
         }
     }
@@ -41,7 +42,7 @@ class CamerasController extends Controller
         if (request()->wantsJson())
             return null;
 
- 		return view('user-pages.cameras.create');
+ 		return view('user-pages.cameras.reactive');
     }
 
     /**
@@ -57,7 +58,7 @@ class CamerasController extends Controller
         
         $this->authorize('view',$camera);
         
- 		return view('user-pages.cameras.edit')->with(compact('camera'));
+ 		return view('user-pages.cameras.reactive')->with(compact('camera'));
     }
 
     /**
@@ -71,9 +72,9 @@ class CamerasController extends Controller
     	$this->authorize('view',$camera);
 
         if (request()->wantsJson()) {
-            return response()->JSON($camera);
+            return response()->JSON(auth()->user()->type == 'admin' ? $camera->load('user') : $camera);
         } else {
-            return view('user-pages.cameras.show')->with(compact('camera'));    
+            return view('user-pages.cameras.reactive')->with(compact('camera'));    
         }
     }
 
@@ -88,6 +89,7 @@ class CamerasController extends Controller
     	$this->authorize('update',$camera);
 
     	$attributes = $this->validateCamera();
+        $attributes['user_id'] = auth()->user()->type == 'admin' ? request()->get('user_id') : auth()->id();
     	$camera->update($attributes);
 
         if (request()->wantsJson()) {
@@ -105,7 +107,7 @@ class CamerasController extends Controller
     public function store()
     {
     	$attributes = $this->validateCamera();
-    	$attributes['user_id'] = auth()->id();
+    	$attributes['user_id'] = auth()->user()->type == 'admin' ? request()->get('user_id') : auth()->id();
 
  		$camera = Camera::create($attributes);
 
@@ -124,12 +126,10 @@ class CamerasController extends Controller
      */
     public function destroy(Camera $camera)
     {
-        if ($camera->user_id != auth()->user()->id) {
-            abort(403);
-        } else {
-            Scene::where('camera_id',$camera->id)->delete();
-            $camera->delete();
-        }
+        $this->authorize('view',$camera);
+
+        Scene::where('camera_id',$camera->id)->delete();
+        $camera->delete();
 
         if (request()->wantsJson()) {
             return response()->JSON(['status' => 'success']);

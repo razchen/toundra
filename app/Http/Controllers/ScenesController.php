@@ -21,11 +21,12 @@ class ScenesController extends Controller
      */
     public function index()
     {
+        $response = auth()->user()->type == 'admin' ? auth()->user()->adminScenes() : auth()->user()->scenes;
         if (request()->wantsJson()) {
-            return response()->JSON(auth()->user()->scenes);
+            return response()->JSON($response);
         } else {
-            return view('user-pages.scenes.index',[
-                'scenes' => auth()->user()->scenes
+            return view('user-pages.scenes.reactive',[
+                'scenes' => $response
             ]);
         }
     }
@@ -40,7 +41,7 @@ class ScenesController extends Controller
         if (request()->wantsJson())
             return null;
 
- 		return view('user-pages.scenes.create',[
+ 		return view('user-pages.scenes.reactive',[
             'cameras' => auth()->user()->cameras
         ]);
     }
@@ -59,7 +60,7 @@ class ScenesController extends Controller
         $this->authorize('view',$scene);
         $cameras = auth()->user()->cameras;
 
- 		return view('user-pages.scenes.edit')->with(compact('scene','cameras'));
+ 		return view('user-pages.scenes.reactive')->with(compact('scene','cameras'));
     }
 
     /**
@@ -73,9 +74,9 @@ class ScenesController extends Controller
     	$this->authorize('view',$scene);
 
         if (request()->wantsJson()) {
-            return response()->JSON($scene);
+            return response()->JSON(auth()->user()->type == 'admin' ? $scene->load('user','camera') : $scene->load('camera'));
         } else {
-            return view('user-pages.scenes.show')->with(compact('scene'));
+            return view('user-pages.scenes.reactive')->with(compact('scene'));
         }	
     }
 
@@ -91,6 +92,7 @@ class ScenesController extends Controller
     	$this->authorize('update',$scene);
 
     	$attributes = $this->validateScene();
+        $attributes['user_id'] = auth()->user()->type == 'admin' ? request()->get('user_id') : auth()->id();
 
     	$scene->update($attributes);
 
@@ -112,7 +114,7 @@ class ScenesController extends Controller
         $this->authorize('store', $scene);
 
     	$attributes = $this->validateScene();
-    	$attributes['user_id'] = auth()->id();
+    	$attributes['user_id'] = auth()->user()->type == 'admin' ? request()->get('user_id') : auth()->id();
 
  		$scene = Scene::create($attributes);
 
@@ -131,7 +133,9 @@ class ScenesController extends Controller
      */
     public function destroy(Scene $scene)
     {
-        $scene->user_id != auth()->user()->id ? abort(403) : $scene->delete();
+        $this->authorize('view',$scene);
+        
+        $scene->delete();
 
         if (request()->wantsJson()) {
             return response()->JSON(['status' => 'success']);

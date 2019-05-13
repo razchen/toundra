@@ -187,16 +187,28 @@ function validate3DFile($file) {
         );
 
         if (!in_array($ending,array_keys($allowedtypes))) {
-            return redirect()->back()->withInput()->withErrors(['Only .stl files are supported.']);
+            if (request()->wantsJson()) {
+                return response()->JSON(['error' => 'Only .stl files are supported.']);
+            } else {
+                return redirect()->back()->withInput()->withErrors(['Only .stl files are supported.']);
+            }
         } elseif ($file->getSize() > 20000000) {
-            return redirect()->back()->withInput()->withErrors(['A maximum size of 20MB is allowed.']);
+            if (request()->wantsJson()) {
+                return response()->JSON(['error' => 'A maximum size of 20MB is allowed.']);
+            } else {
+                return redirect()->back()->withInput()->withErrors(['A maximum size of 20MB is allowed.']);
+            }  
         } elseif (!$file->isValid()) {
-            return redirect()->back()->withInput()->withErrors(['File is not valid.']);
+            if (request()->wantsJson()) {
+                return response()->JSON(['error' => 'File is not valid.']);
+            } else {
+                return redirect()->back()->withInput()->withErrors(['File is not valid.']);
+            }
         }
     }
 }
 
-function add3DFile($three_d_id) {
+function add3DFile($three_d_id = false) {
     if ($three_d_id && request()->hasFile('3dfile')) {
         DB::table('three_d_files')->where('three_d_id',$three_d_id)->delete(); 
         $ret = upload3DFile(request()->file('3dfile'), generateRandomString(), '/stls'); 
@@ -204,6 +216,23 @@ function add3DFile($three_d_id) {
             DB::table('three_d_files')->insert([
                 'three_d_id' => $three_d_id,
                 'filename' => $ret['file']
+            ]);    
+        }
+    }    
+}
+
+function add3DFileJSON() {
+    $ret = upload3DFile(request()->file('filepond'), generateRandomString(), '/stls'); 
+    return response()->JSON($ret);
+}
+
+function add3DFileRecord($three_d_id) {
+    if (request()->get('3dfile')) {
+        DB::table('three_d_files')->where('three_d_id',$three_d_id)->delete();
+        if ($three_d_id) {
+            DB::table('three_d_files')->insert([
+                'three_d_id' => $three_d_id,
+                'filename' => request()->get('3dfile')
             ]);    
         }
     }
@@ -251,4 +280,31 @@ function getIpAddress()
 
 
     return $ip_address;
+}
+
+function filtersAllowed($filters_allowed) {
+    if (!request()->get('filters')) {
+        return [];
+    } elseif(!request()->get('filter_value')) {
+        return [];
+    } else {
+        if (!in_array(request()->get('filters'),$filters_allowed)) {
+            abort(403);
+        } else {
+            $filters = request()->get('filters');
+            $filter_value = request()->get('filter_value');
+            return [$filters => $filter_value];
+        }
+    }
+    
+    return (count(array_intersect($filters_allowed, array_keys(request()->filters))) == count(request()->get('filters')));
+}
+
+function sortAllowed() {
+    if (!request()->get('sort') && !request()->get('sort_dir')) {
+        request()->merge(['sort' => 'updated_at','sort_dir' => 'desc']);
+        return true;
+    }
+
+    return in_array(request()->get('sort'),['updated_at','created_at','name','active','instance_id']) && in_array(request()->get('sort_dir'),['asc','desc']) ? true : abort(403);
 }

@@ -19,15 +19,11 @@ Route::get('/dashboard', 'PagesController@dashboard');
 /* User Routes */
 Route::resource('/cameras', 'CamerasController');
 Route::resource('/models', 'ThreeDsController');
+Route::post('/upload-3d-json', 'ThreeDsController@upload3DJSON');
 Route::resource('/scenes', 'ScenesController');
 Route::resource('/control-definitions', 'ControlDefinitionsController');
 Route::resource('/reports', 'ReportsController');
 
 /* Admin Routes */
-Route::resource('/admin/users', 'AdminUsersController');
-Route::resource('/admin/cameras', 'AdminCamerasController');
-Route::resource('/admin/models', 'AdminThreeDsController');
-Route::resource('/admin/scenes', 'AdminScenesController');
-Route::resource('/admin/control-definitions', 'AdminControlDefinitionsController');
-Route::resource('/admin/reports', 'AdminReportsController');
+Route::resource('/users', 'UsersController');
 Route::resource('/protocols', 'ProtocolsController');

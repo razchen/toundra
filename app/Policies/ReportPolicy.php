@@ -22,7 +22,7 @@ class ReportPolicy
      */
     public function view(User $user, Report $report)
     {
-        return $report->control_definition->user_id == $user->id;
+        return $report->control_definition->user_id == $user->id || $user->type == 'admin';
     }
 
     /**
@@ -34,7 +34,7 @@ class ReportPolicy
      */
     public function store(User $user, Report $report)
     {
-        return $report->controlDefinitionOwnedByUser(request()->control_definition_id);
+        return $report->controlDefinitionOwnedByUser(request()->control_definition_id) || $user->type == 'admin';
     }
 
     /**
@@ -46,6 +46,6 @@ class ReportPolicy
      */
     public function update(User $user, Report $report)
     {
-        return $report->control_definition->user_id == $user->id && $report->controlDefinitionOwnedByUser(request()->control_definition_id);
+        return $report->control_definition->user_id == $user->id && $report->controlDefinitionOwnedByUser(request()->control_definition_id) || $user->type == 'admin';
     }
 }

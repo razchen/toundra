@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 
-class AdminUsersController extends Controller
+class UsersController extends Controller
 {
     public function __construct()
 	{
@@ -20,9 +20,13 @@ class AdminUsersController extends Controller
      */
     public function index()
     {
- 		return view('admin-pages.users.index',[
- 			'users' => User::orderBy('updated_at','desc')->get()
- 		]);
+        if (request()->wantsJson()) {
+            return response()->JSON(User::orderBy('updated_at','desc')->get());
+        } else {
+            return view('user-pages.users.reactive',[
+                'users' => User::orderBy('updated_at','desc')->get()
+            ]); 
+        }
     }
 
     /**
@@ -33,7 +37,11 @@ class AdminUsersController extends Controller
      */
     public function show(User $user)
     {
- 		return view('admin-pages.users.show')->with(compact('user'));
+        if (request()->wantsJson()) {
+            return response()->JSON($user);
+        } else {
+            return view('user-pages.users.reactive')->with(compact('user'));   
+        }
     }
 
     /**
@@ -43,7 +51,10 @@ class AdminUsersController extends Controller
      */
     public function create()
     {
- 		return view('admin-pages.users.create');
+        if (request()->wantsJson())
+            return null;
+
+ 		return view('user-pages.users.reactive');
     }
 
     /**
@@ -54,7 +65,10 @@ class AdminUsersController extends Controller
      */
     public function edit(User $user)
     {
-        return view('admin-pages.users.edit')->with(compact('user'));
+        if (request()->wantsJson())
+            return null;
+
+        return view('user-pages.users.reactive')->with(compact('user'));
     }
 
     /**
@@ -67,13 +81,17 @@ class AdminUsersController extends Controller
     {
         $attributes = $this->validateUser($user->id);
 
-        if( isset($attributes['password'])){
+        if( isset($attributes['password']) ){
             $attributes['password'] = bcrypt($attributes['password']);
         }
         
     	$user->update($attributes);
 
-    	return redirect('/admin/users');
+        if (request()->wantsJson()) {
+            return response()->JSON($user);
+        } else {
+            return redirect('/users');
+        }
     }
 
     /**
@@ -86,7 +104,11 @@ class AdminUsersController extends Controller
     {
         $user->delete();
 
-        return redirect('/users')->with('message','The user ' . $user->name . ' deleted successfully');
+        if (request()->wantsJson()) {
+            return response()->JSON(['status' => 'success']);
+        } else {
+            return redirect('/users')->with('message','The user ' . $user->name . ' deleted successfully');
+        }
     }
 
     /**
@@ -100,9 +122,13 @@ class AdminUsersController extends Controller
         $attributes["type"]=request()->type;
         $attributes["password"]=bcrypt(request()->password);
 
- 		User::create($attributes);
+ 		$user = User::create($attributes);
 
- 		return redirect('/admin/users');
+        if (request()->wantsJson()) {
+            return response()->JSON($user);
+        } else {
+            return redirect('/users');
+        }
     }
 
     /**

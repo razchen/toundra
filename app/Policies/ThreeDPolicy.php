@@ -21,7 +21,7 @@ class ThreeDPolicy
      */
     public function view(User $user, ThreeD $three_d)
     {
-        return $three_d->user_id == $user->id;
+        return $three_d->user_id == $user->id || $user->type == 'admin';
     }
 
     /**
@@ -33,6 +33,6 @@ class ThreeDPolicy
      */
     public function update(User $user, ThreeD $three_d)
     {
-        return $three_d->user_id == $user->id;
+        return $three_d->user_id == $user->id || $user->type == 'admin';
     }
 }

@@ -22,7 +22,7 @@ class ScenePolicy
      */
     public function view(User $user, Scene $scene)
     {
-        return $scene->user_id == $user->id;
+        return $scene->user_id == $user->id || $user->type == 'admin';
     }
 
     /**
@@ -34,7 +34,7 @@ class ScenePolicy
      */
     public function store(User $user, Scene $scene)
     {
-        return $scene->cameraOwnedByUser(request()->camera_id);
+        return $scene->cameraOwnedByUser(request()->camera_id) || $user->type == 'admin';
     }
 
     /**
@@ -46,6 +46,6 @@ class ScenePolicy
      */
     public function update(User $user, Scene $scene)
     {
-        return $scene->user_id == $user->id && $scene->cameraOwnedByUser(request()->camera_id);
+        return ($scene->user_id == $user->id && $scene->cameraOwnedByUser(request()->camera_id)) || $user->type == 'admin';
     }
 }

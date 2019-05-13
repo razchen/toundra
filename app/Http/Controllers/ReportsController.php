@@ -21,11 +21,12 @@ class ReportsController extends Controller
      */
     public function index()
     {
+        $response = auth()->user()->type == 'admin' ? Report::getAllReports() : Report::getAllAuthReports();
         if (request()->wantsJson()) {
-            return response()->JSON(Report::getAllAuthReports());
+            return response()->JSON($response);
         } else {
-            return view('user-pages.reports.index',[
-                'reports' => Report::getAllAuthReports()
+            return view('user-pages.reports.reactive',[
+                'reports' => $response
             ]);
         }
     }
@@ -40,7 +41,7 @@ class ReportsController extends Controller
         if (request()->wantsJson())
             return null;
         
- 		return view('user-pages.reports.create',[
+ 		return view('user-pages.reports.reactive',[
             'control_definitions' => auth()->user()->control_definitions
         ]);
     }
@@ -59,7 +60,7 @@ class ReportsController extends Controller
         $this->authorize('view',$report);
         $control_definitions = auth()->user()->control_definitions;
 
- 		return view('user-pages.reports.edit')->with(compact('report','control_definitions'));
+ 		return view('user-pages.reports.reactive')->with(compact('report','control_definitions'));
     }
 
      /**
@@ -73,9 +74,9 @@ class ReportsController extends Controller
     	$this->authorize('view',$report);
 
         if (request()->wantsJson()) {
-            return response()->JSON($report);
+            return $report->load('control_definition');
         } else {
-            return view('user-pages.reports.show')->with(compact('report'));
+            return view('user-pages.reports.reactive')->with(compact('report'));
         }   
     }
 
@@ -90,6 +91,7 @@ class ReportsController extends Controller
     	$this->authorize('update',$report);
 
         $attributes = $this->validateReport();
+        $attributes['user_id'] = auth()->user()->type == 'admin' ? request()->get('user_id') : auth()->id();
 
     	$report->update($attributes);
 
@@ -111,6 +113,7 @@ class ReportsController extends Controller
         $this->authorize('store', $report);
 
         $attributes = $this->validateReport();
+        $attributes['user_id'] = auth()->user()->type == 'admin' ? request()->get('user_id') : auth()->id();
 
  		$report = Report::create($attributes);
 
@@ -129,7 +132,8 @@ class ReportsController extends Controller
      */
     public function destroy(Report $report)
     {
-        $report->control_definition->user_id != auth()->user()->id ? abort(403) : $report->delete();
+        $this->authorize('view',$report); 
+        $report->delete();
 
         if (request()->wantsJson()) {
             return response()->JSON(['status' => 'success']);

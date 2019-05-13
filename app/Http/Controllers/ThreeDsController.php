@@ -22,11 +22,13 @@ class ThreeDsController extends Controller
      */
     public function index()
     {
+        $response = auth()->user()->type == 'admin' ? auth()->user()->adminThreeDs() : auth()->user()->three_ds;
+        
         if (request()->wantsJson()) {
-            return response()->JSON(auth()->user()->three_ds);
+            return response()->JSON($response);
         } else {
-            return view('user-pages.three_ds.index',[
-                'three_ds' => auth()->user()->three_ds
+            return view('user-pages.three_ds.reactive',[
+                'three_ds' => $response
             ]);
         }
     }
@@ -41,7 +43,7 @@ class ThreeDsController extends Controller
         if (request()->wantsJson())
             return null;
         
- 		return view('user-pages.three_ds.create');
+ 		return view('user-pages.three_ds.reactive');
     }
 
     /**
@@ -60,7 +62,7 @@ class ThreeDsController extends Controller
 
         $this->authorize('view',$three_d);
         
- 		return view('user-pages.three_ds.edit')->with(compact('three_d'));
+ 		return view('user-pages.three_ds.reactive')->with(compact('three_d'));
     }
 
      /**
@@ -76,9 +78,9 @@ class ThreeDsController extends Controller
         $three_d->getFiles($three_d);
 
         if (request()->wantsJson()) {
-            return response()->JSON($three_d);
+            return response()->JSON(auth()->user()->type == 'admin' ? $three_d->load('user') : $three_d);
         } else {
-            return view('user-pages.three_ds.show')->with(compact('three_d'));
+            return view('user-pages.three_ds.reactive')->with(compact('three_d'));
         }   
     }
 
@@ -95,14 +97,20 @@ class ThreeDsController extends Controller
     	$this->authorize('update',$three_d);
 
     	$attributes = $this->validateThreeD();
-        validate3DFile(request()->file('3dfile'));
-
-    	$three_d->update($attributes);
-        add3DFile($three_d->id);
+        $attributes['user_id'] = auth()->user()->type == 'admin' ? request()->get('user_id') : auth()->id();
 
         if (request()->wantsJson()) {
+            add3DFileRecord($three_d->id);
+
+            $three_d->update($attributes);
+
             return response()->JSON($three_d);
         } else {
+            validate3DFile(request()->file('3dfile'));
+
+            $three_d->update($attributes);
+            add3DFile($three_d->id);
+
             return redirect('/models');
         }
     }
@@ -116,15 +124,19 @@ class ThreeDsController extends Controller
     public function store()
     {
     	$attributes = $this->validateThreeD();
-    	$attributes['user_id'] = auth()->id();
-        validate3DFile(request()->file('3dfile'));
+    	$attributes['user_id'] = auth()->user()->type == 'admin' ? request()->get('user_id') : auth()->id();
 
-        $three_d = ThreeD::create($attributes);
-        add3DFile($three_d->id);
- 		
         if (request()->wantsJson()) {
+            $three_d = ThreeD::create($attributes);
+            add3DFileRecord($three_d->id);
+            
             return response()->JSON($three_d);
         } else {
+            validate3DFile(request()->file('3dfile'));
+
+            $three_d = ThreeD::create($attributes);
+            add3DFile($three_d->id);
+
             return redirect('/models');
         }
     }
@@ -138,13 +150,29 @@ class ThreeDsController extends Controller
     public function destroy(ThreeD $three_d, $model)
     {
         $three_d = ThreeD::findOrFail($model);
-        $three_d->user_id != auth()->user()->id ? abort(403) : $three_d->delete();
+        $this->authorize('view',$three_d);
+        $three_d->delete();
         DB::table('three_d_files')->where('three_d_id',$three_d->id)->delete();
 
         if (request()->wantsJson()) {
             return response()->JSON(['status' => 'success']);
         } else {
             return redirect('/models')->with('message','The model ' . $three_d->name . ' deleted successfully');
+        }
+    }
+
+    /**
+    * Uploads a 3d file to server
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function upload3DJSON()
+    {
+        $errors = validate3DFile(request()->file('filepond'));
+        if ($errors) {
+            return $errors;
+        } else {
+            return add3DFileJSON();    
         }
     }
 
