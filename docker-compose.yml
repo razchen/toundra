@@ -1,0 +1,61 @@
+version: "3.1"
+volumes:
+  nfsmount:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
+      device: ":$PWD"
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: toundra-mysql
+    working_dir: /application
+    volumes:
+      - nfsmount:/application
+      - /data/toundra:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=toundra
+      - MYSQL_USER=homestead
+      - MYSQL_PASSWORD=secret
+    ports:
+      - "2055:3306"
+    networks:
+      - default
+      - nginx-proxy_toundra
+
+  webserver:
+    image: nginx:alpine
+    container_name: toundra-webserver
+    working_dir: /application
+    volumes:
+        - nfsmount:/application
+        - ./phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "2103:2103"
+    environment:
+        - VIRTUAL_PORT=80
+        - VIRTUAL_HOST=www.toundra.test
+    networks:
+      - default
+      - nginx-proxy_toundra
+
+  php-fpm:
+    build: phpdocker/php-fpm
+    container_name: toundra-php-fpm
+    working_dir: /application
+    environment:
+      XDEBUG_CONFIG: "remote_host=docker.for.mac.host.internal"
+      PHP_IDE_CONFIG: "serverName=toundra-Docker"
+    volumes:
+      - nfsmount:/application
+      - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.3/fpm/conf.d/99-overrides.ini
+    networks:
+      - default
+      - nginx-proxy_toundra
+
+networks:
+  nginx-proxy_toundra:
+    external: true

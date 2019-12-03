@@ -9,11 +9,11 @@ use App\Scene;
 class CamerasController extends Controller
 {
     public function __construct()
-	{
+    {
         if (!request()->wantsJson()) {
-            $this->middleware('auth');    
+            $this->middleware('auth');
         }
-	}
+    }
 
     /**
      * Display a listing of the Cameras.
@@ -26,9 +26,9 @@ class CamerasController extends Controller
         if (request()->wantsJson()) {
             return response()->JSON($response);
         } else {
-            return view('user-pages.cameras.reactive',[
+            return view('user-pages.cameras.reactive', [
                 'cameras' => $response
-            ]);    
+            ]);
         }
     }
 
@@ -39,10 +39,11 @@ class CamerasController extends Controller
      */
     public function create()
     {
-        if (request()->wantsJson())
+        if (request()->wantsJson()) {
             return null;
+        }
 
- 		return view('user-pages.cameras.reactive');
+        return view('user-pages.cameras.reactive');
     }
 
     /**
@@ -53,12 +54,13 @@ class CamerasController extends Controller
      */
     public function edit(Camera $camera)
     {
-        if (request()->wantsJson())
+        if (request()->wantsJson()) {
             return null;
+        }
         
-        $this->authorize('view',$camera);
+        $this->authorize('view', $camera);
         
- 		return view('user-pages.cameras.reactive')->with(compact('camera'));
+        return view('user-pages.cameras.reactive')->with(compact('camera'));
     }
 
     /**
@@ -69,12 +71,12 @@ class CamerasController extends Controller
      */
     public function show(Camera $camera)
     {
-    	$this->authorize('view',$camera);
+        $this->authorize('view', $camera);
 
         if (request()->wantsJson()) {
             return response()->JSON(auth()->user()->type == 'admin' ? $camera->load('user') : $camera);
         } else {
-            return view('user-pages.cameras.reactive')->with(compact('camera'));    
+            return view('user-pages.cameras.reactive')->with(compact('camera'));
         }
     }
 
@@ -86,11 +88,11 @@ class CamerasController extends Controller
      */
     public function update(Camera $camera)
     {
-    	$this->authorize('update',$camera);
+        $this->authorize('update', $camera);
 
-    	$attributes = $this->validateCamera();
+        $attributes = $this->validateCamera();
         $attributes['user_id'] = auth()->user()->type == 'admin' ? request()->get('user_id') : auth()->id();
-    	$camera->update($attributes);
+        $camera->update($attributes);
 
         if (request()->wantsJson()) {
             return response()->JSON($camera);
@@ -106,12 +108,12 @@ class CamerasController extends Controller
      */
     public function store()
     {
-    	$attributes = $this->validateCamera();
-    	$attributes['user_id'] = auth()->user()->type == 'admin' ? request()->get('user_id') : auth()->id();
+        $attributes = $this->validateCamera();
+        $attributes['user_id'] = auth()->user()->type == 'admin' ? request()->get('user_id') : auth()->id();
 
- 		$camera = Camera::create($attributes);
+        $camera = Camera::create($attributes);
 
- 		if (request()->wantsJson()) {
+        if (request()->wantsJson()) {
             return response()->JSON($camera);
         } else {
             return redirect('/cameras');
@@ -126,15 +128,15 @@ class CamerasController extends Controller
      */
     public function destroy(Camera $camera)
     {
-        $this->authorize('view',$camera);
+        $this->authorize('view', $camera);
 
-        Scene::where('camera_id',$camera->id)->delete();
+        Scene::where('camera_id', $camera->id)->delete();
         $camera->delete();
 
         if (request()->wantsJson()) {
             return response()->JSON(['status' => 'success']);
         } else {
-            return redirect('/cameras')->with('message','The camera ' . $camera->name . ' deleted successfully');
+            return redirect('/cameras')->with('message', 'The camera ' . $camera->name . ' deleted successfully');
         }
     }
 
@@ -145,9 +147,9 @@ class CamerasController extends Controller
      */
     protected function validateCamera()
     {
-    	return request()->validate([
-    		'name' => 'required',
-    		'intrinsic' => 'required',
-    	]);
+        return request()->validate([
+            'name' => 'required',
+            'intrinsic' => 'required',
+        ]);
     }
 }
